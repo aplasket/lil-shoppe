@@ -1,7 +1,7 @@
-require 'csv'
+require "csv"
 
 namespace :csv_load do
-  desc 'Import all CSV data'
+  desc "Import all CSV data"
   task all: [:customers, :merchants, :invoices, :transactions, :items, :invoice_items]
 
   desc "imports customer data from CSV and creates Customer objects"
