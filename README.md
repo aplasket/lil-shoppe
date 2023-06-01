@@ -1,3 +1,4 @@
+![image](https://github.com/The-J-MAK-5/little-shop-7/assets/124642113/b604734c-a2ba-432d-8920-e1da15737e12)
 # Little Esty Shop
 
 ## Background and Description
