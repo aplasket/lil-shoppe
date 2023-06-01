@@ -1,4 +1,6 @@
 ## Checklist before requesting a review
+- [ ] Verified Render deploy is functional
+- [ ] Pulled/merged main 
 - [ ] Tests for the changes have been added into spec files
 - [ ] Branch name follows our guidelines 
 - [ ] All tests running clean
