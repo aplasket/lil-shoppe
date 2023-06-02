@@ -4,4 +4,4 @@
 
 <p><b>Item Name: </b><%= @item.name %></p>
 <p><b>Item Description: </b><%= @item.description %></p>
-<p><b>Current Selling Price: </b><%= (@item.price_in_dollars) %></p>
+<p><b>Current Selling Price: </b><%= number_to_currency(@item.unit_price / 100.to_f) %></p>
