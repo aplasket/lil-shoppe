@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :invoice_item do
     item
     invoice
-    quantity { 1 }
-    unit_price { 1 }
-    status { 1 }
+    quantity { Faker::Number.number(digits: 3) }
+    unit_price { Faker::Number.within(range: 100..20000) }
+    status { ["Pending", "Packaged", "Shipped"].sample }
   end
 end

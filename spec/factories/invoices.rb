@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :invoice do
-    status { 1 }
+    status { ["In Progress", "Completed", "Cancelled"].sample }
     customer
   end
 end
