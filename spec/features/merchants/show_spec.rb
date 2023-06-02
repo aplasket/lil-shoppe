@@ -12,7 +12,7 @@ RSpec.describe Merchant, type: :feature do
       expect(page).to_not have_content(merchant_2.name)
     end
 
-    xit "display link to merchant items index" do
+    it "displays link to merchant items index" do
       visit "/merchants/#{merchant_1.id}/dashboard"
 
       click_link "Items"
@@ -21,7 +21,7 @@ RSpec.describe Merchant, type: :feature do
       expect(current_path).to_not eq("/merchants/#{merchant_2.id}/items")
     end
 
-    xit "display link to merchant invoices index" do
+    it "displays link to merchant invoices index" do
       visit "/merchants/#{merchant_1.id}/dashboard"
 
       click_link "Invoices"
