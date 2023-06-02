@@ -11,4 +11,9 @@ Rails.application.routes.draw do
   get "/merchants/:merchant_id/invoices", to: "merchant_invoices#index"
 
   get "/admin", to: "admin#index"
+
+  namespace :admin do
+    resources :merchants, except: [:destroy]
+    resources :invoices, except: [:destroy]
+  end
 end

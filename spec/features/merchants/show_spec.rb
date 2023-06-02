@@ -31,3 +31,9 @@ RSpec.describe Merchant, type: :feature do
     end
   end
 end
+
+      expect(page).to have_content(merchant_1.name)
+      expect(page).to_not have_content(merchant_2.name)
+    end
+  end
+end
