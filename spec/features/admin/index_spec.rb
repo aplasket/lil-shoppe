@@ -58,6 +58,21 @@ RSpec.describe "/admin, index page", type: :feature do
     end
 
     it "displays the top 5 customers with their names and number of successful transactions" do
+      visit "/admin"
+      save_and_open_page
+
+      expect(page).to have_content("Top Customers")
+
+      within "#top-five-customers" do
+      expect(customer_1.first_name).to appear_before(customer_2.first_name)
+      expect(customer_2.first_name).to appear_before(customer_3.first_name)
+      expect(customer_3.first_name).to appear_before(customer_4.first_name)
+      expect(customer_4.first_name).to appear_before(customer_5.first_name)
+
+      expect(page).to_not have_content(customer_6.first_name)
+      expect(page).to_not have_content(customer_6.last_name)
+      end
+
     end
   end
 end
