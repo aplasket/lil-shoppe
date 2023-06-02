@@ -7,5 +7,14 @@ RSpec.describe "/admin, index page", type: :feature do
 
       expect(page).to have_content("Admin Dashboard")
     end
+
+    it "I see a link to admin merchants index and admin invoices index" do
+      visit "/admin"
+
+      within ".header" do
+        expect(page).to have_link("Admin Merchants Index")
+        expect(page).to have_link("Admin Invoices Index")
+      end
+    end
   end
 end
