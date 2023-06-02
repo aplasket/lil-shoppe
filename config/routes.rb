@@ -7,4 +7,9 @@ Rails.application.routes.draw do
   get "/", to: "application#welcome"
 
   get "/admin", to: "admin#index"
+
+  namespace :admin do
+    resources :merchants, except: [:destroy]
+    resources :invoices, except: [:destroy]
+  end
 end
