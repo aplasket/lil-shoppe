@@ -1,3 +1,5 @@
 class AdminController < ApplicationController
-  def index; end
+  def index
+    @customers = Customer.top_5_by_transaction
+  end
 end
