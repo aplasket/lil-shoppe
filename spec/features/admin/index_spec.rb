@@ -22,7 +22,7 @@ RSpec.describe "/admin, index page", type: :feature do
     let!(:customer_1) { create(:customer) } # 5 successful transactions
     let!(:customer_2) { create(:customer) } # 4 successful transactions
     let!(:customer_3) { create(:customer) } # 3 successful transactions
-    let!(:customer_4) { create(:customer) } # _ successful transactions
+    let!(:customer_4) { create(:customer) } # 2 successful transactions
     let!(:customer_5) { create(:customer) } # _1 successful transactions
     let!(:customer_6) { create(:customer) } # _0 successful transactions__
 
