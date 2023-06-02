@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Merchants items index" do
+RSpec.describe "Merchant_items#index" do
   let!(:merchant_1) { Merchant.create!(name: "Steve's Soaps") }
   let!(:merchant_2) { Merchant.create!(name: "Charlie's Chia Pets") }
   let!(:item_1) { merchant_1.items.create!(name: "hand soap", description: "lavender", unit_price: 800) }
