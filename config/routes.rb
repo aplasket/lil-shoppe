@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get "/", to: "application#welcome"
 
 
-  get "/merchants/:merchant_id/dashboard", to: "merchants#show"
+  get "/merchants/:id/dashboard", to: "merchants#show"
 
   get "/admin", to: "admin#index"
 
