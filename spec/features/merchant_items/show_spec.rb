@@ -11,7 +11,6 @@ RSpec.describe "Merchant_items#show" do
     visit "/merchants/#{merchant_1.id}/items"
 
     click_link "hand soap"
-    save_and_open_page
 
     expect(current_path).to eq "/merchants/#{merchant_1.id}/items/#{item_1.id}"
     expect(page).to have_content("Name")
@@ -22,4 +21,3 @@ RSpec.describe "Merchant_items#show" do
     expect(page).to have_content("$8.00")
   end
 end
-

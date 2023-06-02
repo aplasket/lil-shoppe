@@ -13,6 +13,5 @@ RSpec.describe "Merchant_items#index" do
     expect(page).to have_content(item_1.name)
     expect(page).to have_content(item_2.name)
     expect(page).to have_no_content(item_3.name)
-
   end
 end
