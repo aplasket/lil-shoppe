@@ -3119,7 +3119,7 @@ Style/BisectedAttrAccessor:
 Style/BlockComments:
   Description: 'Do not use block comments.'
   StyleGuide: '#no-block-comments'
-  Enabled: true
+  Enabled: false
   VersionAdded: '0.9'
   VersionChanged: '0.23'
 
