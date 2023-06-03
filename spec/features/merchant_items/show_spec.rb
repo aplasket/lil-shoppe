@@ -20,4 +20,33 @@ RSpec.describe "Merchant_items#show" do
     expect(page).to have_content("Current Selling Price")
     expect(page).to have_content("$8.00")
   end
+
+  # As a merchant,
+  # When I visit the merchant show page of an item (/merchants/:merchant_id/items/:item_id)
+  # I see a link to update the item information.
+  # When I click the link
+  # Then I am taken to a page to edit this item
+  # And I see a form filled in with the existing item attribute information
+  # When I update the information in the form and I click ‘submit’
+  # Then I am redirected back to the item show page where I see the updated information
+  # And I see a flash message stating that the information has been successfully updated.
+  it "can update item information" do
+    visit "/merchants/#{merchant_1.id}/items/#{item_1.id}"
+
+    click_link "Update Item"
+
+    expect(current_path).to eq "/merchants/#{merchant_1.id}/items/#{item_1.id}/edit"
+    expect(page).to have_content(item_1.name)
+    expect(page).to have_content(item_1.description)
+    expect(page).to have_content("$8.00")
+
+    fill_in "Description", with: "aloe"
+
+    click_button "Submit"
+
+    expect(current_path).to eq "/merchants/#{merchant_1.id}/items/#{item_1.id}"
+    expect(page).to have_content("aloe")
+    expect(page).to have_content("Information has been successfully updated")
+  end
+
 end
