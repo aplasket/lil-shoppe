@@ -13,8 +13,6 @@ RSpec.describe "/admin/merchants/:id, admin::merchants show page" do
       expect(page).to have_content(merchant_1.name)
       expect(page).to_not have_content(merchant_2.name)
 
-      save_and_open_page
-
       visit "/admin/merchants/#{merchant_2.id}"
       expect(page).to have_content(merchant_2.name)
       expect(page).to_not have_content(merchant_1.name)
