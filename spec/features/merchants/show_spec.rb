@@ -32,6 +32,8 @@ RSpec.describe Merchant, type: :feature do
   end
 
   describe "Merchant Dashboard Stats - Top 5 Customers" do
+    let!(:merchant_1) { Merchant.create!(name: "Steve's Soaps") }
+    let!(:merchant_2) { Merchant.create!(name: "Charlie's Chia Pets") }
     let!(:customer_1) { create(:customer) } # 5 successful transactions
     let!(:customer_2) { create(:customer) } # 4 successful transactions
     let!(:customer_3) { create(:customer) } # 3 successful transactions
@@ -69,16 +71,30 @@ RSpec.describe Merchant, type: :feature do
         create(:transaction, result: false, invoice: invoice)
       end
     end
+    
     it "display names of top 5 customers with largest successful transactions " do
-      
-      
+    
       visit "/merchants/#{merchant_1.id}/dashboard"
 
-
+      within("#top5") do
+      expect(customer_1.first_name).to appear_before(customer_2.first_name)
+      expect(customer_2.first_name).to appear_before(customer_3.first_name)
+      expect(customer_3.first_name).to appear_before(customer_4.first_name)
+      expect(customer_4.first_name).to appear_before(customer_5.first_name)
+      expect(page).to_not have_content(customer_6.first_name)
+      end
     end
 
     it "displays number of successful transactions for top 5 customers" do
       visit "/merchants/#{merchant_1.id}/dashboard"
 
-      
+      within("#top5") do
+      expect(customer_1.invoices.count).to appear_before(customer_2.invoices.count)
+      expect(customer_2.invoices.count).to appear_before(customer_3.invoices.count)
+      expect(customer_3.invoices.count).to appear_before(customer_4.invoices.count)
+      expect(customer_4.invoices.count).to appear_before(customer_5.invoices.count)
+      expect(page).to_not have_content(customer_6.invoices.count)
+      end
     end
+  end
+end
