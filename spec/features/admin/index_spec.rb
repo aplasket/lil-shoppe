@@ -59,7 +59,6 @@ RSpec.describe "/admin, index page", type: :feature do
 
     it "displays the top 5 customers with their names and number of successful transactions" do
       visit "/admin"
-      save_and_open_page
 
       expect(page).to have_content("Top Customers")
 
