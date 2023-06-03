@@ -7,17 +7,17 @@ RSpec.describe "Merchant_items#show" do
   let!(:item_2) { merchant_1.items.create!(name: "sugar scrub", description: "lemongrass", unit_price: 1000) }
   let!(:item_3) { merchant_2.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500) }
 
-    it "links to the merchant's item's show page" do
-        visit "/merchants/#{merchant_1.id}/items"
+  it "links to the merchant's item's show page" do
+    visit "/merchants/#{merchant_1.id}/items"
 
-        click_link "hand soap"
+    click_link "hand soap"
 
-        expect(current_path).to eq "/merchants/#{merchant_1.id}/items/#{item_1.id}"
+    expect(current_path).to eq "/merchants/#{merchant_1.id}/items/#{item_1.id}"
 
-        expect(page).to have_content("Merchant Item Details")
-        expect(page).to have_content("Merchant: #{merchant_1.name}")
-        expect(page).to have_content("Item Name: #{item_1.name}")
-        expect(page).to have_content("Item Description: #{item_1.description}")
-        expect(page).to have_content("Current Selling Price: $#{item_1.unit_price / 100.to_f}")
-      end
+    expect(page).to have_content("Merchant Item Details")
+    expect(page).to have_content("Merchant: #{merchant_1.name}")
+    expect(page).to have_content("Item Name: #{item_1.name}")
+    expect(page).to have_content("Item Description: #{item_1.description}")
+    expect(page).to have_content("Current Selling Price: $#{item_1.unit_price / 100.to_f}")
+  end
 end
