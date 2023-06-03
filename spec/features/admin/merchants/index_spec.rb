@@ -5,11 +5,11 @@ RSpec.describe "/admin/merchants, admin::merchants index page" do
   let!(:merchant_2) { create(:merchant) }
 
   describe "as an admin on the admin::merchants index page" do
-    it "I see the name of each merchant" do
+    it "I see the name of each merchant and their links" do
       visit "/admin/merchants"
 
-      expect(page).to have_content(merchant_1.name)
-      expect(page).to have_content(merchant_2.name)
+      expect(page).to have_link(merchant_1.name)
+      expect(page).to have_link(merchant_2.name)
     end
   end
 end
