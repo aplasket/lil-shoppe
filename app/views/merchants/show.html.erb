@@ -4,9 +4,9 @@
 <%= link_to "Invoices", "/merchants/#{@merchant.id}/invoices" %>
 
 
-<p> Top 5 Customers </p>
+<h2> Top 5 Customers </h2>
 <div id="top5">
     <% @customers.each do |customer| %>
-      <p> <%= "#{customer.first_name} #{customer.last_name} - #{customer.successful_transactions_count} succesful transactions" %> </p>
+      <p> <%= "#{customer.first_name} #{customer.last_name} - #{customer.successful_transactions_count} successful transactions" %> </p>
     <% end %>
 </div>

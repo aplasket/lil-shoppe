@@ -38,8 +38,8 @@ RSpec.describe Merchant, type: :feature do
     let!(:customer_2) { create(:customer) } # 4 successful transactions
     let!(:customer_3) { create(:customer) } # 3 successful transactions
     let!(:customer_4) { create(:customer) } # 2 successful transactions
-    let!(:customer_5) { create(:customer) } # _1 successful transactions
-    let!(:customer_6) { create(:customer) } # _0 successful transactions
+    let!(:customer_5) { create(:customer) } # 1 successful transactions
+    let!(:customer_6) { create(:customer) } # 0 successful transactions
     
     before(:each) do
       5.times do
@@ -89,11 +89,12 @@ RSpec.describe Merchant, type: :feature do
       visit "/merchants/#{merchant_1.id}/dashboard"
 
       within("#top5") do
-      expect(customer_1.successful_transactions_count).to appear_before(customer_2.successful_transactions_count)
-      expect(customer_2.successful_transactions_count).to appear_before(customer_3.successful_transactions_count)
-      expect(customer_3.successful_transactions_count).to appear_before(customer_4.successful_transactions_count)
-      expect(customer_4.successful_transactions_count).to appear_before(customer_5.successful_transactions_count)
-      expect(page).to_not have_content(customer_6.successful_transactions_count)
+      save_and_open_page
+      expect("#{customer_1.successful_transactions_count} successful transactions").to appear_before("#{customer_2.successful_transactions_count} successful transactions")
+      expect("#{customer_2.successful_transactions_count} successful transactions").to appear_before("#{customer_3.successful_transactions_count} successful transactions")      # expect(customer_3.successful_transactions_count).to appear_before(customer_4.successful_transactions_count)
+      expect("#{customer_3.successful_transactions_count} successful transactions").to appear_before("#{customer_4.successful_transactions_count} successful transactions")
+      expect("#{customer_4.successful_transactions_count} successful transactions").to appear_before("#{customer_5.successful_transactions_count} successful transactions")
+      expect(page).to_not have_content("#{customer_6.successful_transactions_count}")
       end
     end
   end
