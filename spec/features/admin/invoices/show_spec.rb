@@ -10,7 +10,7 @@ RSpec.describe "Admin Invoices Show Page", type: :feature do
       invoice_2 = create(:invoice, customer: customer_2)
 
       visit "/admin/invoices/#{invoice_1.id}"
-save_and_open_page
+      
       expect(page).to have_content("Invoice ID: #{invoice_1.id}")
       expect(page).to have_content("Invoice Status: #{invoice_1.status}")
       expect(page).to have_content("Invoice Created On: #{invoice_1.created_at.strftime("%A, %B %d, %Y")}")
