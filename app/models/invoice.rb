@@ -7,7 +7,7 @@ class Invoice < ApplicationRecord
 
   enum status: ["in progress", "completed", "cancelled"]
 
-  def self.find_incomplete_invoices
-    joins(:invoice_items).where("invoice_items.status != 2").group(:id)
+  def self.find_and_sort_incomplete_invoices
+    joins(:invoice_items).where("invoice_items.status != 2").group(:id).order(:created_at)
   end
 end
