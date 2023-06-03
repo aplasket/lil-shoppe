@@ -7,4 +7,8 @@
 <p><b>Current Selling Price: </b><%= number_to_currency(@merchant.items.find(params[:item_id]).unit_price / 100.to_f) %></p>
 
 <h4><%= link_to "Update Item", "/merchants/#{@merchant.id}/items/#{@item.id}/edit" %></h4>
-
+<% if flash[:success].present? %>
+  <div class="flash flash-success">
+  <h4><%= flash[:success] %></h4>
+  </div>
+<% end %>
