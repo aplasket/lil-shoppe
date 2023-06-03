@@ -2,3 +2,12 @@
   <div><%= link_to "Admin Merchants Index", "/admin/merchants" %></div>
   <div><%= link_to "Admin Invoices Index", "/admin/invoices" %></div>
 </div>
+
+<section id="top-five-customers">
+  <h3>Top Customers</h3>
+  <ol>
+    <% @customers.each do |customer| %>
+      <li><%= "#{customer.first_name} #{customer.last_name} - #{customer.successful_transactions_count} succesful transactions" %>
+    <% end %>
+  </ol>
+</section>
