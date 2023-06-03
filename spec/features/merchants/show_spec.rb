@@ -89,11 +89,11 @@ RSpec.describe Merchant, type: :feature do
       visit "/merchants/#{merchant_1.id}/dashboard"
 
       within("#top5") do
-      expect(customer_1.invoices.count).to appear_before(customer_2.invoices.count)
-      expect(customer_2.invoices.count).to appear_before(customer_3.invoices.count)
-      expect(customer_3.invoices.count).to appear_before(customer_4.invoices.count)
-      expect(customer_4.invoices.count).to appear_before(customer_5.invoices.count)
-      expect(page).to_not have_content(customer_6.invoices.count)
+      expect(customer_1.successful_transactions_count).to appear_before(customer_2.successful_transactions_count)
+      expect(customer_2.successful_transactions_count).to appear_before(customer_3.successful_transactions_count)
+      expect(customer_3.successful_transactions_count).to appear_before(customer_4.successful_transactions_count)
+      expect(customer_4.successful_transactions_count).to appear_before(customer_5.successful_transactions_count)
+      expect(page).to_not have_content(customer_6.successful_transactions_count)
       end
     end
   end
