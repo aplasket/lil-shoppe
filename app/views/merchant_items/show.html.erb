@@ -6,5 +6,5 @@
 <p><b>Item Description: </b><%= @merchant.items.find(params[:item_id]).description %></p>
 <p><b>Current Selling Price: </b><%= number_to_currency(@merchant.items.find(params[:item_id]).unit_price / 100.to_f) %></p>
 
-<h4><%= link_to "Update Item", "/merchants/#{@merchant.id}/@items/#{@item.id}/update" %></h4>
+<h4><%= link_to "Update Item", "/merchants/#{@merchant.id}/items/#{@item.id}/edit" %></h4>
 
