@@ -1,0 +1,11 @@
+<h1>Invoices for <%= @merchant.name %></h1>
+
+<% if @invoices.empty? %>
+  <h3>No Invoices Available</h3>
+<% else %>
+  <ul>
+    <% @invoices.each do |invoice| %>
+      <li><%= link_to "Invoice ##{invoice.id}", "/merchants/#{invoice.merchant_id}/invoices/#{invoice.id}" %></li>
+    <% end %>
+  </ul>
+<% end %>
