@@ -100,7 +100,6 @@ RSpec.describe "/admin, index page", type: :feature do
 
     it "has a section for Incomplete Invoices that displays linked ids that have not been shipped, and shows when they were created at, ordered oldest to newest" do
       visit "/admin"
-      save_and_open_page
       expect(page).to have_content("Incomplete Invoices")
       expect(page).to_not have_content("Invoice ##{@invoice_3.id}")
 
@@ -110,7 +109,6 @@ RSpec.describe "/admin, index page", type: :feature do
         expect(page).to have_link("Invoice ##{@invoice_1.id}")
         expect(page).to have_link("Invoice ##{@invoice_2.id}")
       end
-
     end
   end
 end
