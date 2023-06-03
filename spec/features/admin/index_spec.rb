@@ -3,13 +3,13 @@ require "rails_helper"
 RSpec.describe "/admin, index page", type: :feature do
   describe "as an admin, when I visit index page:" do
     it "i see a header indicating it's the dashboard" do
-      visit "/admin"
+      visit admin_index_path
 
       expect(page).to have_content("Admin Dashboard")
     end
 
     it "I see a link to admin merchants index and admin invoices index" do
-      visit "/admin"
+      visit admin_index_path
 
       within ".header" do
         expect(page).to have_link("Admin Merchants Index")
@@ -58,7 +58,7 @@ RSpec.describe "/admin, index page", type: :feature do
     end
 
     it "displays the top 5 customers with their names and number of successful transactions" do
-      visit "/admin"
+      visit admin_index_path
 
       expect(page).to have_content("Top Customers")
 
@@ -99,7 +99,7 @@ RSpec.describe "/admin, index page", type: :feature do
     end
 
     it "has a section for unshipped Incomplete Invoices with ids as links, ordered by creation, oldest to newest" do
-      visit "/admin"
+      visit admin_index_path
       expect(page).to have_content("Incomplete Invoices")
       expect(page).to_not have_content("Invoice ##{@invoice_3.id}")
 
