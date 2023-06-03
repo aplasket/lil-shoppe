@@ -10,7 +10,7 @@ RSpec.describe Invoice, type: :model do
   end
   describe "class methods" do
     describe "#find_and_sort_incomplete_invoices" do
-      it "returns all the invoices that have items that have not been shipped yet, I see the creation date ordered by oldest to newest" do
+      it "returns all invoices with unshipped items, ordered by creation, oldest to newest" do
         merchant = create(:merchant)
         customer = create(:customer)
 
@@ -35,6 +35,5 @@ RSpec.describe Invoice, type: :model do
         expect(Invoice.find_and_sort_incomplete_invoices).to eq([invoice_1, invoice_2])
       end
     end
-
   end
 end

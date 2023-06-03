@@ -98,7 +98,7 @@ RSpec.describe "/admin, index page", type: :feature do
       @invoice_item_6 = create(:invoice_item, status: "shipped", item: item_6, invoice: @invoice_3)
     end
 
-    it "has a section for Incomplete Invoices that displays linked ids that have not been shipped, and shows when they were created at, ordered oldest to newest" do
+    it "has a section for unshipped Incomplete Invoices with ids as links, ordered by creation, oldest to newest" do
       visit "/admin"
       expect(page).to have_content("Incomplete Invoices")
       expect(page).to_not have_content("Invoice ##{@invoice_3.id}")
