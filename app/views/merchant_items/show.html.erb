@@ -2,6 +2,9 @@
 
 <h3>Merchant: <%= @merchant.name %></h3>
 
-<p><b>Item Name: </b><%= @item.name %></p>
-<p><b>Item Description: </b><%= @item.description %></p>
-<p><b>Current Selling Price: </b><%= number_to_currency(@item.unit_price / 100.to_f) %></p>
+<p><b>Item Name: </b><%= @merchant.items.find(params[:item_id]).name %></p>
+<p><b>Item Description: </b><%= @merchant.items.find(params[:item_id]).description %></p>
+<p><b>Current Selling Price: </b><%= number_to_currency(@merchant.items.find(params[:item_id]).unit_price / 100.to_f) %></p>
+
+<h4><%= link_to "Update Item", "/merchants/#{@merchant.id}/@items/#{@item.id}/update" %></h4>
+
