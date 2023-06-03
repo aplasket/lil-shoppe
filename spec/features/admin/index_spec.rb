@@ -86,9 +86,9 @@ RSpec.describe "/admin, index page", type: :feature do
       item_5 = create(:item, merchant: merchant)
       item_6 = create(:item, merchant: merchant)
 
-      @invoice_1 = create(:invoice, customer: customer) # 2 items that have not shipped
-      @invoice_2 = create(:invoice, customer: customer) # 1 item shipped, 1 not shipped
-      @invoice_3 = create(:invoice, customer: customer) # 2 items that have shipped
+      @invoice_1 = create(:invoice, created_at: 3.day.ago, customer: customer) # 2 items that have not shipped
+      @invoice_2 = create(:invoice, created_at: 2.day.ago, customer: customer) # 1 item shipped, 1 not shipped
+      @invoice_3 = create(:invoice, created_at: 2.day.ago, customer: customer) # 2 items that have shipped
 
       @invoice_item_1 = create(:invoice_item, status: "pending", item: item_1, invoice: @invoice_1)
       @invoice_item_2 = create(:invoice_item, status: "packaged", item: item_2, invoice: @invoice_1)
@@ -98,13 +98,15 @@ RSpec.describe "/admin, index page", type: :feature do
       @invoice_item_6 = create(:invoice_item, status: "shipped", item: item_6, invoice: @invoice_3)
     end
 
-    it "has a section for Incomplete Invoices that displays linked ids that have not been shipped" do
+    it "has a section for Incomplete Invoices that displays linked ids that have not been shipped, and shows when they were created at, ordered oldest to newest" do
       visit "/admin"
-
+      save_and_open_page
       expect(page).to have_content("Incomplete Invoices")
       expect(page).to_not have_content("Invoice ##{@invoice_3.id}")
 
       within("#incomplete-invoices") do
+        expect("Invoice ##{@invoice_1.id}").to appear_before("Invoice ##{@invoice_2.id}")
+        expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %d, %Y"))
         expect(page).to have_link("Invoice ##{@invoice_1.id}")
         expect(page).to have_link("Invoice ##{@invoice_2.id}")
       end
