@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   patch "/merchants/:merchant_id/items/:item_id/", to: "merchant_items#update"
 
   get "/admin", to: "admin#index"
+  resources :merchants, only: [:update]
 
   namespace :admin do
     resources :merchants, except: [:destroy]
