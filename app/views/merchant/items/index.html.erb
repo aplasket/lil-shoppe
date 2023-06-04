@@ -1,10 +1,14 @@
-<h1>All Items</h1>
+<h3><%= @merchant.name %></h3>
 
-<% @merchant.items.each do |item| %>
-  <h4><%= link_to item.name, merchant_item_path(@merchant, item) %></h4>
-  <% if item.disabled? %>
-    <%= button_to "Enable", enable_merchant_item_path(@merchant, item), method: :patch %>
-  <% else %>
-    <%= button_to "Disable", disable_merchant_item_path(@merchant, item), method: :patch %>
+<div id="merchants_items">
+  <% @items.each do |item| %>
+    <div id="merchants_items-<%= item.id %>">
+      <p><%= link_to item.name, merchant_item_path(@merchant, item) %> Status: <%= item.status %></p>
+      <% if item.status == "enabled" %>
+        <%= button_to "Disable Item", disable_merchant_item_path(@merchant, item), method: :patch %>
+      <% else %>
+        <%= button_to "Enable Item", enable_merchant_item_path(@merchant, item), method: :patch %>
+      <% end %>
+    </div>
   <% end %>
-<% end %>
+</div>
