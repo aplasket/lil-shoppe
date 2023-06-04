@@ -8,7 +8,7 @@ RSpec.describe "Merchant_items#index" do
   let!(:item_3) { merchant_2.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500) }
 
   it "shows all of the names of all of the merchants items" do
-    visit "/merchants/#{merchant_1.id}/items"
+    visit merchant_items_path(merchant_1)
 
     expect(page).to have_content(item_1.name)
     expect(page).to have_content(item_2.name)
