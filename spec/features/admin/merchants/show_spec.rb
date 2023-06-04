@@ -22,7 +22,7 @@ RSpec.describe "/admin/merchants/:id, admin::merchants show page" do
       merchant_3 = Merchant.create!(name: "Toasty Toads")
 
       visit "/admin/merchants/#{merchant_3.id}"
-      save_and_open_page
+      
       expect(page).to have_content(merchant_3.name)
       expect(page).to have_link("Update #{merchant_3.name}")
       expect(page).to_not have_link("Update #{merchant_1.name}")
