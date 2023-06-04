@@ -1,5 +1,8 @@
 <h1>Update Item</h1>
-<%= form_with model: @item, url: "/merchants/#{@merchant.id}/items/#{@item.id}", local: true do |f| %>
+<%= form_with model: @merchant.items.find(params[:item_id]),
+    url: merchant_item_path(@merchant, @merchant.items.find(params[:item_id])),
+    local: true do |f| %>
+
   <%= f.label :name %>
   <%= f.text_field :name %>
 
