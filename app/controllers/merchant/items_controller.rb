@@ -19,6 +19,24 @@ class Merchant::ItemsController < ApplicationController
     flash[:success] = "** Item information has been successfully updated **"
   end
 
+  def disable
+    merchant = Merchant.find(params[:merchant_id])
+    item = merchant.items.find(params[:id])
+    item.update(status: :disabled)
+
+    redirect_to merchant_items_path(merchant)
+    flash[:success] = "Item has been disabled successfully."
+  end
+
+  def enable
+    merchant = Merchant.find(params[:merchant_id])
+    item = merchant.items.find(params[:id])
+    item.update(status: :enabled)
+
+    redirect_to merchant_items_path(merchant)
+    flash[:success] = "Item has been enabled successfully."
+  end
+
   private
 
   def item_params

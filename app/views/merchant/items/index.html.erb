@@ -2,4 +2,9 @@
 
 <% @merchant.items.each do |item| %>
   <h4><%= link_to item.name, merchant_item_path(@merchant, item) %></h4>
+  <% if item.disabled? %>
+    <%= button_to "Enable", enable_merchant_item_path(@merchant, item), method: :patch %>
+  <% else %>
+    <%= button_to "Disable", disable_merchant_item_path(@merchant, item), method: :patch %>
+  <% end %>
 <% end %>
