@@ -16,6 +16,9 @@ RSpec.describe "/admin/merchants/:id/edit, admin::merchants edit page" do
 
       click_link "Update #{merchant_3.name}"
 
+      expect(page).to have_content("Edit #{merchant_3.name}")
+      expect(current_path).to eq(edit_admin_merchant_path(merchant_3))
+      
       fill_in "Name", with: "Cheesy Bread"
       click_button "Submit Updates"
 
