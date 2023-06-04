@@ -7,7 +7,7 @@ RSpec.describe "/admin/merchants/:id, admin::merchants show page" do
   describe "as an admin on admin::merchants index page" do
     it "each merchant link navigates to admin::merchants show page" do
       visit admin_merchants_path
-      click_link("#{merchant_1.name}")
+      click_link(merchant_1.name)
 
       expect(current_path).to eq(admin_merchant_path(merchant_1))
       expect(page).to have_content(merchant_1.name)
