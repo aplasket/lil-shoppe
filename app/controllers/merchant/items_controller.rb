@@ -13,10 +13,10 @@ class Merchant::ItemsController < ApplicationController
 
   def update
     merchant = Merchant.find(params[:merchant_id])
-    if merchant.items.find(params[:item_id]).update(item_params)
-      redirect_to merchant_item_path(merchant, merchant.items.find(params[:item_id]))
-      flash[:success] = "** Item information has been successfully updated **"
-    end
+    return unless merchant.items.find(params[:item_id]).update(item_params)
+
+    redirect_to merchant_item_path(merchant, merchant.items.find(params[:item_id]))
+    flash[:success] = "** Item information has been successfully updated **"
   end
 
   private
