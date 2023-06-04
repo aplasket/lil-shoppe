@@ -2449,7 +2449,7 @@ Lint/UselessAccessModifier:
 Lint/UselessAssignment:
   Description: 'Checks for useless assignment to a local variable.'
   StyleGuide: '#underscore-unused-vars'
-  Enabled: true
+  Enabled: false
   VersionAdded: '0.11'
 
 Lint/UselessElseWithoutRescue:
@@ -2511,7 +2511,7 @@ Metrics/AbcSize:
   # a Float.
   AllowedMethods: []
   AllowedPatterns: []
-  CountRepeatedAttributes: true
+  CountRepeatedAttributes: false
   Max: 17
 
 Metrics/BlockLength:
@@ -3284,7 +3284,7 @@ Style/ClassAndModuleChildren:
   # have the knowledge to perform either operation safely and thus requires
   # manual oversight.
   SafeAutoCorrect: false
-  Enabled: true
+  Enabled: false
   VersionAdded: '0.19'
   #
   # Basically there are two different styles:
@@ -3300,7 +3300,7 @@ Style/ClassAndModuleChildren:
   #   end
   #
   # The compact style is only forced, for classes or modules with one child.
-  EnforcedStyle: nested
+  EnforcedStyle: compact
   SupportedStyles:
     - nested
     - compact
