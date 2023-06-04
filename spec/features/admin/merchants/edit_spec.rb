@@ -1,11 +1,13 @@
 require "rails_helper"
 
 RSpec.describe "/admin/merchants/:id/edit, admin::merchants edit page" do
-  let!(:merchant_1) { create(:merchant) }
-  let!(:merchant_2) { create(:merchant) }
+  # let!(:merchant_1) { create(:merchant) }
+  # let!(:merchant_2) { create(:merchant) }
 
-  describe "as an admin on the admin::merchants edit page"
-  it "can update the merchant's info and see a 'successful update' flash message" do
+  describe "as an admin on the admin::merchants edit page" do
+    it "can update the merchant's info and see a 'successful update' flash message" do
+      merchant_1 = Merchant.create!(name: "GingerBread Maker")
+      merchant_2 = Merchant.create!(name: "CandyMan")
       merchant_3 = Merchant.create!(name: "Toasty Toads")
 
       visit "/admin/merchants/#{merchant_3.id}"
@@ -20,8 +22,11 @@ RSpec.describe "/admin/merchants/:id/edit, admin::merchants edit page" do
       fill_in "Name", with: "Cheesy Bread"
       click_button "Submit Updates"
 
+      # save_and_open_page
       expect(current_path).to eq("/admin/merchants/#{merchant_3.id}")
       expect(page).to have_content("Merchant has been successfully updated")
       expect(page).to have_content("Cheesy Bread")
       expect(page).to_not have_content("Toasty Toads")
     end
+  end
+end
