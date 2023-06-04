@@ -6,7 +6,7 @@ RSpec.describe "/admin/merchants, admin::merchants index page" do
 
   describe "as an admin on the admin::merchants index page" do
     it "I see the name of each merchant and their links" do
-      visit "/admin/merchants"
+      visit admin_merchants_path
 
       expect(page).to have_link(merchant_1.name)
       expect(page).to have_link(merchant_2.name)
