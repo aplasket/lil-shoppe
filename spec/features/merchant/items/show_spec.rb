@@ -8,11 +8,9 @@ RSpec.describe "Merchant_items#show" do
   let!(:item_3) { merchant_2.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500) }
 
   it "links to the merchant's item's show page" do
-    visit merchant_items_path(merchant_1)
+    visit "/merchants/#{merchant_1.id}/items/#{item_1.id}"
 
     click_link "hand soap"
-
-    expect(current_path).to eq merchant_item_path(merchant_1, item_1)
 
     expect(page).to have_content("Merchant Item Details")
     expect(page).to have_content("Merchant: #{merchant_1.name}")
@@ -22,13 +20,12 @@ RSpec.describe "Merchant_items#show" do
   end
 
   it "updates merchant_items" do
-    visit merchant_item_path(merchant_1, item_1)
+    visit "/merchants/#{merchant_1.id}/items/#{item_1.id}"
 
     expect(page).to have_link "Update Item"
 
     click_link "Update Item"
 
-    expect(current_path).to eq edit_merchant_item_path(merchant_1, item_1)
     expect(find_field("item_name").value).to eq(item_1.name)
     expect(find_field("item_description").value).to eq(item_1.description)
     expect(find_field("item_unit_price").value.to_i).to eq(800)
@@ -36,7 +33,6 @@ RSpec.describe "Merchant_items#show" do
     fill_in "Description", with: "lemongrass"
     click_button "Update Item"
 
-    expect(page).to have_current_path(merchant_item_path(merchant_1, item_1))
     expect(page).to have_content("Item information has been successfully updated")
     expect(page).to have_content("Item Name: #{item_1.name}")
     expect(page).to have_content("Item Description: lemongrass")

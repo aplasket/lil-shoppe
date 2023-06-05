@@ -17,7 +17,7 @@ RSpec.describe "Merchant_items#index", type: :feature do
 
   it "displays a button that will enable or disable each item" do
     visit merchant_items_path(merchant_id: merchant_1.id)
-    save_and_open_page
+
     within ".enabled-items" do
       expect(page).to have_content("Enabled Items")
       expect(page).to have_link(item_1.name)
@@ -46,5 +46,3 @@ RSpec.describe "Merchant_items#index", type: :feature do
     end
   end
 end
-
-
