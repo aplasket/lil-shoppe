@@ -99,48 +99,40 @@ RSpec.describe Merchant, type: :feature do
   end
 
   describe "Merchant Dashboard Stats - Merchant Dashboard Items Ready to Ship" do
-    let!(:merchant_1) { create(:merchant) }
-    let!(:merchant_2) { create(:merchant) }
-    let!(:customer_1) { create(:customer) } 
-    let!(:customer_2) { create(:customer) } 
-    let!(:customer_3) { create(:customer) }
-    let!(:item_1) { create(:item, merchant: merchant_1) }
-    let!(:item_2) { create(:item, merchant: merchant_1) }
-    let!(:item_3) { create(:item, merchant: merchant_1) }
-    let!(:item_4) { create(:item, merchant: merchant_2) }
-    let!(:invoice_items_1) { create(:invoice_item, item: item_1) }
-    let!(:invoice_items_1) { create(:invoice_item, item: item_2) }
-    let!(:invoice_items_2) { create(:invoice_item, item: item_3) }
-    let!(:invoice_items_3) { create(:invoice_item, item: item_4) }
-    let!(:invoice_1) { create(:invoice, customer: customer_1) }
-    let!(:invoice_2) { create(:invoice, customer: customer_2) }
-    let!(:invoice_3) { create(:invoice, customer: customer_3) }
-    
     before(:each) do
-      5.times do
-        invoice_items = create(:invoice_item, item: item_1)
-        invoice = create(:invoice, customer: customer_1)
-        create(:transaction, result: true, invoice: invoice)
-      end
-
-      4.times do
-        invoice = create(:invoice, customer: customer_2)
-        create(:transaction, result: false, invoice: invoice)
-      end
-
-      3.times do
-        invoice = create(:invoice, customer: customer_3)
-        create(:transaction, result: false, invoice: invoice)
-      end
-
+    @merchant_1 = Merchant.create!(name: "Steve's Soaps")
+    @merchant_2 = Merchant.create!(name: "Charlie's Chia Pets")
+    @customer_1 = Customer.create!(first_name: "John", last_name: "Smith")
+    @customer_2 = Customer.create!(first_name: "Jane", last_name: "Doe")
+    @item_1 = Item.create!(name: "Soap", description: "Clean", unit_price: 100, merchant_id: merchant_1.id)
+    @item_2 = Item.create!(name: "Shampoo", description: "Clean", unit_price: 600, merchant_id: merchant_1.id)
+    @item_3 = Item.create!(name: "Conditioner", description: "Clean", unit_price: 500, merchant_id: merchant_1.id)
+    @invoice_items_1 = InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 1, unit_price: 100)
+    @invoice_items_2 = InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice_2.id, quantity: 1, unit_price: 600)
+    @invoice_items_3 = InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice_3.id, quantity: 1, unit_price: 500)
+    @invoice_1 = Invoice.create!(customer_id: customer_1.id, status: "packaged")
+    @invoice_2 = Invoice.create!(customer_id: customer_2.id, status: "pending")
+    @invoice_3 = Invoice.create!(customer_id: customer_2.id, status: "shipped")
+    @transaction_1 = Transaction.create!(invoice_id: invoice_1.id, result: "success")
+    @transaction_2 = Transaction.create!(invoice_id: invoice_2.id, result: "success")
+    @transaction_3 = Transaction.create!(invoice_id: invoice_3.id, result: "success")
     end
+    # As a merchant
+    # When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
+    # Then I see a section for "Items Ready to Ship"
+    # In that section I see a list of the names of all of my items that
+    # have been ordered and have not yet been shipped,
+    # And next to each Item I see the id of the invoice that ordered my item
+    # And each invoice id is a link to my merchant's invoice show page
+
     it 'display a section with "Items Ready to Ship" with a list of all those items' do
       visit "/merchants/#{merchant_1.id}/dashboard"
 
       within("#ItemsReadyShip") do
         expect(page).to have_content("Items Ready to Ship")
-
-
+        expect(page).to have_content(item_1.name)
+        expect(page).to have_content(item_2.name)
+        expect(page).to have_content(item_3.name)
       end
     end
 
@@ -148,6 +140,7 @@ RSpec.describe Merchant, type: :feature do
       visit "/merchants/#{merchant_1.id}/dashboard"
 
       within("#ItemsReadyShip") do
+      end
 
     end
   end

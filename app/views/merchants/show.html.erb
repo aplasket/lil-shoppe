@@ -10,3 +10,9 @@
       <p> <%= "#{customer.first_name} #{customer.last_name} - #{customer.successful_transactions_count} successful transactions" %> </p>
     <% end %>
 </div>
+<div id="ItemsReadyShip">
+<h2> Items Ready to Ship </h2>
+<% @merchant.items_ready_to_ship.each do |item| %>
+  <p> <%= "#{item.name}" %> </p>
+<% end %>
+</div>
