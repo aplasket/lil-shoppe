@@ -3,7 +3,7 @@
 <div id="merchants_items">
   <% @items.each do |item| %>
     <div id="merchants_items-<%= item.id %>">
-      <p><%= link_to item.name, merchant_item_path(@merchant, item) %> Status: <%= item.status %></p>
+    <p><%= link_to item.name, merchant_item_path(@merchant, item) %>  Status: <%= item.status %></p>
       <% if item.status == "enabled" %>
         <%= button_to "Disable Item", disable_merchant_item_path(@merchant, item), method: :patch %>
       <% else %>

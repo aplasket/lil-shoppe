@@ -21,27 +21,24 @@ class Merchant::ItemsController < ApplicationController
   def update
     @merchant = Merchant.find(params[:merchant_id])
     @item = Item.find(params[:item_id])
-    @item.update(name: params[:name], description: params[:description], unit_price: params[:unit_price])
     if @item.update(item_params)
-      redirect_to "/merchants/#{@merchant.id}/items/#{@item.id}"
+      redirect_to merchant_item_path(@merchant, @item)
       flash[:notice] = "Item Successfully Updated"
     else
-      redirect_to "/merchants/#{@merchant.id}/items/#{@item.id}/edit"
+      redirect_to edit_merchant_item_path(@merchant, @item)
       flash[:alert] = "Error: Valid data must be entered"
     end
-  end 
+  end
 
   def update_status
     @merchant = Merchant.find(params[:merchant_id])
     @item = Item.find(params[:item_id])
-    if params[:disable] != nil
-      @item.update(status: "disabled")
-    elsif params[:enable] != nil
-      @item.update(status: "enabled")
-    else
-      @item.status
+    require 'pry'; binding.pry
+    if params[:commit] == "Disable Item"
+      @item.update(status: :disabled)
+    elsif params[:commit] == "Enable Item"
+      @item.update(status: :enabled)
     end
-    @item.save
     redirect_to "/merchants/#{@merchant.id}/items"
   end
 

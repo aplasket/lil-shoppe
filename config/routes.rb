@@ -10,8 +10,8 @@ Rails.application.routes.draw do
     resources :invoices, only: [:index], controller: "merchant/invoices"
     resources :items, only: [:index, :show, :edit, :update], param: :item_id, controller: "merchant/items" do
       member do
-        patch :disable, to: "merchant/items#disable"
-        patch :enable, to: "merchant/items#enable"
+        patch :disable, to: "merchant/items#update_status"
+        patch :enable, to: "merchant/items#update_status"
       end
     end
     resource :dashboard, only: [:show], controller: "merchants"
