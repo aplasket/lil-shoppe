@@ -25,7 +25,7 @@ FactoryBot.define do
   end
 
   factory :merchant do
-    name { Faker::Company.name }
+    name { Faker::Commerce.brand }
   end
 
   factory :transaction do
