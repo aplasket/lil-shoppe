@@ -4,10 +4,11 @@
   <% @items.each do |item| %>
     <div id="merchants_items-<%= item.id %>">
       <p><%= link_to item.name, merchant_item_path(@merchant, item) %>  Status: <%= item.status %></p>
+      <%= hidden_field_tag 'item[status]', item.status %>
       <% if item.status == "enabled" %>
-        <%= button_to "Disable Item", disable_merchant_item_path(@merchant, item), method: :patch, remote: true, data: { turbo_action: "replace", turbo_frame: "merchants_items-#{item.id}" } %>
+        <%= button_to "Disable Item", disable_merchant_item_path(@merchant, item), method: :patch %>
       <% else %>
-        <%= button_to "Enable Item", enable_merchant_item_path(@merchant, item), method: :patch, remote: true, data: { turbo_action: "replace", turbo_frame: "merchants_items-#{item.id}" } %>
+        <%= button_to "Enable Item", enable_merchant_item_path(@merchant, item), method: :patch %>
       <% end %>
     </div>
   <% end %>

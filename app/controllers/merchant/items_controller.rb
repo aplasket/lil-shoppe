@@ -30,6 +30,7 @@ class Merchant::ItemsController < ApplicationController
   end
 
 
+
   def update_status
     @merchant = Merchant.find(params[:merchant_id])
     @item = @merchant.items.find(params[:item_id])
