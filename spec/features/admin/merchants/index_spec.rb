@@ -21,14 +21,18 @@ RSpec.describe "/admin/merchants, admin::merchants index page" do
     it "shows a button to enable/disable a merchant - US27" do
       visit admin_merchants_path
 
-      within ".merchant-#{merchant_1.id}" do
-        expect(merchant_1.status).to eq("enabled")
-        expect(page).to have_button("Disable")
+      within "#enabled-merchants" do
+        within ".merchant-#{merchant_1.id}" do
+          expect(merchant_1.status).to eq("enabled")
+          expect(page).to have_button("Disable")
+        end
       end
 
-      within ".merchant-#{merchant_2.id}" do
-        expect(merchant_2.status).to eq("disabled")
-        expect(page).to have_button("Enable")
+      within "#disabled-merchants" do
+        within ".merchant-#{merchant_2.id}" do
+          expect(merchant_2.status).to eq("disabled")
+          expect(page).to have_button("Enable")
+        end
       end
     end
 
@@ -59,6 +63,7 @@ RSpec.describe "/admin/merchants, admin::merchants index page" do
         expect(page).to have_button("Disable")
       end
 
+      expect(page).to have_content("Merchant status updated successfully")
       expect(merchant_1.reload.status).to eq("disabled")
       expect(merchant_2.reload.status).to eq("enabled")
       expect(merchant_3.reload.status).to eq("disabled")
