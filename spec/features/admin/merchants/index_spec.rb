@@ -12,9 +12,9 @@ RSpec.describe "/admin/merchants, admin::merchants index page" do
         expect(page).to have_link(merchant_1.name)
       end
 
-    within ".merchant-#{merchant_2.id}" do
-      expect(page).to have_link(merchant_2.name)
-    end
+      within ".merchant-#{merchant_2.id}" do
+        expect(page).to have_link(merchant_2.name)
+      end
   end
 
     it "shows a button to enable/disable a merchant - US27" do
