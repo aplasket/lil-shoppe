@@ -6,9 +6,9 @@ RSpec.describe Merchant, type: :model do
   end
 
   describe "class methods" do
-    let!(:merchant_1) { create(:merchant) }
-    let!(:merchant_2) { create(:merchant, status: 1) }
-    let!(:merchant_3) { create(:merchant, status: 1) }
+    let!(:merchant_1) { create(:merchant, status: 0) }
+    let!(:merchant_2) { create(:merchant) }
+    let!(:merchant_3) { create(:merchant) }
 
     it "#all_enabled" do
       expect(Merchant.all_enabled).to eq([merchant_1])

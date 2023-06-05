@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "/admin/merchants, admin::merchants index page" do
-  let!(:merchant_1) { create(:merchant) }
-  let!(:merchant_2) { create(:merchant, status: 1) }
-  let!(:merchant_3) { create(:merchant, status: 1) }
+  let!(:merchant_1) { create(:merchant, status: 0) }
+  let!(:merchant_2) { create(:merchant) }
+  let!(:merchant_3) { create(:merchant) }
 
   describe "as an admin on the admin::merchants index page" do
     it "I see the name of each merchant and their links - US24" do
