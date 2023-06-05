@@ -38,7 +38,7 @@ RSpec.describe "/admin/merchants, admin::merchants index page" do
         expect(merchant_1.status).to eq("enabled")
         expect(page).to have_button("Disable")
         expect(page).to_not have_button("Enable")
-      
+
         click_button "Disable"
 
         expect(current_path).to eq(admin_merchants_path)
@@ -56,7 +56,7 @@ RSpec.describe "/admin/merchants, admin::merchants index page" do
         expect(current_path).to eq(admin_merchants_path)
         expect(merchant_2.status).to eq("enabled")
         expect(page).to have_button("Disable")
-    end
+      end
     end
   end
 end
