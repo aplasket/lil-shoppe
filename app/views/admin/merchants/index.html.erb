@@ -1,3 +1,21 @@
 <% @merchants.each do |merchant| %>
-  <p><%= link_to merchant.name, admin_merchant_path(merchant) %></p>
+  <% if merchant.status == "enabled" %>
+    <div class="merchant-<%= merchant.id %>">
+      <p><%= link_to merchant.name, admin_merchant_path(merchant) %></p>
+
+      <%= form_with model: merchant, url:{ controller: "admin/merchants", action: "update", id: merchant.id }, local: true do |form|%>
+        <%= form.hidden_field :status, value: :disabled %>
+        <%= form.submit "Disable" %>
+      <% end %>
+    </div>
+  <% elsif merchant.status == "disabled" %>
+    <div class="merchant-<%= merchant.id %>">
+      <p><%= link_to merchant.name, admin_merchant_path(merchant) %></p>
+
+      <%= form_with model: merchant, url:{ controller: "admin/merchants", action: "update", id: merchant.id }, local: true do |form|%>
+        <%= form.hidden_field :status, value: :enabled %>
+        <%= form.submit "Enable" %>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
