@@ -15,7 +15,7 @@ RSpec.describe "/admin/merchants, admin::merchants index page" do
       within ".merchant-#{merchant_2.id}" do
         expect(page).to have_link(merchant_2.name)
       end
-  end
+    end
 
     it "shows a button to enable/disable a merchant - US27" do
       visit admin_merchants_path
