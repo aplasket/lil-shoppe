@@ -1,51 +1,37 @@
 class Merchant::ItemsController < ApplicationController
-  # before_action :set_merchant
-
   def index
     @merchant = Merchant.find(params[:merchant_id])
     @items = @merchant.items
   end
 
   def show
-    @merchant = Merchant.find(params[:merchant_id])
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
+    @merchant = Merchant.find(@item.merchant_id)
   end
 
   def edit
-    @merchant = Merchant.find(params[:merchant_id])
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
+    @merchant = Merchant.find(@item.merchant_id)
   end
 
-  def update_status
-    @merchant = Merchant.find(params[:merchant_id])
-    @item = @merchant.items.find(params[:item_id])
-
-    if params[:commit] == "Disable Item"
-      @item.update(status: :disabled)
-    elsif params[:commit] == "Enable Item"
-      @item.update(status: :enabled)
+  def update
+    item = Item.find(params[:id])
+    if params[:status] == "0"
+      item.update(status: 0)
+      redirect_to merchant_items_path(merchant_id: item.merchant_id)
+    elsif params[:status] == "1"
+      item.update(status: 1)
+      redirect_to merchant_items_path(merchant_id: item.merchant_id)
+    else
+      item.update(item_params)
+      redirect_to merchant_item_path(merchant_id: item.merchant_id, id: item.id)
+      flash[:notice] = "Item #{item.name} Successfully Updated!"
     end
-
-    redirect_to merchant_items_path(@merchant)
   end
 
-
-
-  def update_status
-    @merchant = Merchant.find(params[:merchant_id])
-    @item = @merchant.items.find(params[:item_id])
-
-    if params[:commit] == "Disable Item"
-      @item.update(status: "disabled")
-    elsif params[:commit] == "Enable Item"
-      @item.update(status: "enabled")
-    end
-
-    redirect_to merchant_items_path(@merchant)
-  end
-
+  private
 
   def item_params
-    params.permit(:name, :description, :unit_price)
+    params.require(:item).permit(:name, :description, :unit_price, :status)
   end
 end
