@@ -27,6 +27,25 @@ class Merchant::ItemsController < ApplicationController
       flash[:success] = "Item #{item.name} Successfully Updated!"
       redirect_to merchant_item_path(merchant_id: item.merchant_id, id: item.id)
     end
+
+    def new
+      @merchant = Merchant.find(params[:id])
+      @item = Item.new
+    end
+
+    def create
+      @merchant = Merchant.find(params[:id])
+      @item = @merchant.items.new(item_params)
+      if item.save
+        redirect_to merchant_item_path(merchant_id: item.merchant_id, id: item.id)
+      else
+        redirect_to merchant_item_path(merchant_id: item.merchant_id, "new")
+      end
+    end
+
+
+
+
   end
 
   private
