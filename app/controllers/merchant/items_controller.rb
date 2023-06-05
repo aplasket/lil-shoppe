@@ -4,8 +4,6 @@ class Merchant::ItemsController < ApplicationController
   def index
     @merchant = Merchant.find(params[:merchant_id])
     @items = @merchant.items
-    @enabled_items = @items.enabled
-    @disabled_items = @items.disabled
   end
 
   def show
@@ -18,29 +16,33 @@ class Merchant::ItemsController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
-  def update
-    @merchant = Merchant.find(params[:merchant_id])
-    @item = Item.find(params[:item_id])
-    if @item.update(item_params)
-      redirect_to merchant_item_path(@merchant, @item)
-      flash[:notice] = "Item Successfully Updated"
-    else
-      redirect_to edit_merchant_item_path(@merchant, @item)
-      flash[:alert] = "Error: Valid data must be entered"
-    end
-  end
-
   def update_status
     @merchant = Merchant.find(params[:merchant_id])
-    @item = Item.find(params[:item_id])
-    require 'pry'; binding.pry
+    @item = @merchant.items.find(params[:item_id])
+
     if params[:commit] == "Disable Item"
       @item.update(status: :disabled)
     elsif params[:commit] == "Enable Item"
       @item.update(status: :enabled)
     end
-    redirect_to "/merchants/#{@merchant.id}/items"
+
+    redirect_to merchant_items_path(@merchant)
   end
+
+
+  def update_status
+    @merchant = Merchant.find(params[:merchant_id])
+    @item = @merchant.items.find(params[:item_id])
+
+    if params[:commit] == "Disable Item"
+      @item.update(status: "disabled")
+    elsif params[:commit] == "Enable Item"
+      @item.update(status: "enabled")
+    end
+
+    redirect_to merchant_items_path(@merchant)
+  end
+
 
   def item_params
     params.permit(:name, :description, :unit_price)

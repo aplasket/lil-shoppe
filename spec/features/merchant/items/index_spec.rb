@@ -9,7 +9,6 @@ RSpec.describe "Merchant_items#index", type: :feature do
 
   it "shows all of the names of all of the merchant's items" do
     visit merchant_items_path(merchant_1)
-require 'pry'; binding.pry
     expect(page).to have_content(item_1.name)
     expect(page).to have_content(item_2.name)
     expect(page).to have_no_content(item_3.name)
@@ -26,17 +25,16 @@ require 'pry'; binding.pry
 
   it "displays a disable/enable button next to each item name" do
     visit "/merchants/#{merchant_1.id}/items"
-    require 'pry'; binding.pry
     within "#merchants_items-#{item_1.id}" do
-    expect(page).to have_content("#{item_1.name} Status: enabled")
-      expect(page).to have_button("Disable Item")
-      click_button "Disable Item"
+    expect(page).to have_content("#{item_1.name} Status: disabled")
+      expect(page).to have_button("Enable Item")
+      click_button "Enable Item"
     end
 
-    within "#merchants_items-#{item1.id}" do
-      expect(current_path).to eq("/merchants/#{merchant-1.id}/items")
-      expect(page).to have_content("#{item_1.name} Status: disabled")
-      expect(page).to have_button("Enable Item")
+    within "#merchants_items-#{item_1.id}" do
+      expect(current_path).to eq("/merchants/#{merchant_1.id}/items")
+      expect(page).to have_content("#{item_1.name} Status: enabled")
+      expect(page).to have_button("Disable Item")
     end
   end
 end
