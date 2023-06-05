@@ -100,22 +100,21 @@ RSpec.describe Merchant, type: :feature do
 
   describe "Merchant Dashboard Stats - Merchant Dashboard Items Ready to Ship" do
     before(:each) do
-    @merchant_1 = Merchant.create!(name: "Steve's Soaps")
-    @merchant_2 = Merchant.create!(name: "Charlie's Chia Pets")
-    @customer_1 = Customer.create!(first_name: "John", last_name: "Smith")
-    @customer_2 = Customer.create!(first_name: "Jane", last_name: "Doe")
-    @item_1 = Item.create!(name: "Soap", description: "Clean", unit_price: 100, merchant_id: merchant_1.id)
-    @item_2 = Item.create!(name: "Shampoo", description: "Clean", unit_price: 600, merchant_id: merchant_1.id)
-    @item_3 = Item.create!(name: "Conditioner", description: "Clean", unit_price: 500, merchant_id: merchant_1.id)
-    @invoice_items_1 = InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 1, unit_price: 100)
-    @invoice_items_2 = InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice_2.id, quantity: 1, unit_price: 600)
-    @invoice_items_3 = InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice_3.id, quantity: 1, unit_price: 500)
-    @invoice_1 = Invoice.create!(customer_id: customer_1.id, status: "packaged")
-    @invoice_2 = Invoice.create!(customer_id: customer_2.id, status: "pending")
-    @invoice_3 = Invoice.create!(customer_id: customer_2.id, status: "shipped")
-    @transaction_1 = Transaction.create!(invoice_id: invoice_1.id, result: "success")
-    @transaction_2 = Transaction.create!(invoice_id: invoice_2.id, result: "success")
-    @transaction_3 = Transaction.create!(invoice_id: invoice_3.id, result: "success")
+      @merchant_1 = Merchant.create!(name: "Steve's Soaps")
+      @customer_1 = Customer.create!(first_name: "John", last_name: "Smith")
+      @customer_2 = Customer.create!(first_name: "Jane", last_name: "Doe")
+      @item_1 = Item.create!(name: "Soap", description: "Clean", unit_price: 100, merchant_id: @merchant_1.id)
+      @item_2 = Item.create!(name: "Shampoo", description: "Clean", unit_price: 600, merchant_id: @merchant_1.id)
+      @item_3 = Item.create!(name: "Conditioner", description: "Clean", unit_price: 500, merchant_id: @merchant_1.id)
+      @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 0)
+      @invoice_2 = Invoice.create!(customer_id: @customer_2.id, status: 0)
+      @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 1)
+      @invoice_items_1 = InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice_1.id, quantity: 1, unit_price: 100)
+      @invoice_items_2 = InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_2.id, quantity: 1, unit_price: 600)
+      @invoice_items_3 = InvoiceItem.create!(item_id: @item_3.id, invoice_id: @invoice_3.id, quantity: 1, unit_price: 500)
+      @transaction_1 = Transaction.create!(invoice_id: @invoice_1.id, result: "success")
+      @transaction_2 = Transaction.create!(invoice_id: @invoice_2.id, result: "success")
+      @transaction_3 = Transaction.create!(invoice_id: @invoice_3.id, result: "success")
     end
     # As a merchant
     # When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
@@ -125,19 +124,19 @@ RSpec.describe Merchant, type: :feature do
     # And next to each Item I see the id of the invoice that ordered my item
     # And each invoice id is a link to my merchant's invoice show page
 
-    it 'display a section with "Items Ready to Ship" with a list of all those items' do
-      visit "/merchants/#{merchant_1.id}/dashboard"
+    it 'display a section with "Items that Need to Ship" with a list of all those items' do
+      visit "/merchants/#{@merchant_1.id}/dashboard"
 
       within("#ItemsReadyShip") do
-        expect(page).to have_content("Items Ready to Ship")
-        expect(page).to have_content(item_1.name)
-        expect(page).to have_content(item_2.name)
-        expect(page).to have_content(item_3.name)
+        expect(page).to have_content("Items that Need to Ship")
+        expect(page).to have_content(@item_1.name)
+        expect(page).to have_content(@item_2.name)
+        expect(page).to_not have_content(@item_3.name)
       end
     end
 
     it 'display id of the invoice that ordered the item as a link to that merchant show page' do
-      visit "/merchants/#{merchant_1.id}/dashboard"
+      visit "/merchants/#{@merchant_1.id}/dashboard"
 
       within("#ItemsReadyShip") do
       end

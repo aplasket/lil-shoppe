@@ -11,7 +11,7 @@
     <% end %>
 </div>
 <div id="ItemsReadyShip">
-<h2> Items Ready to Ship </h2>
+<h2> Items that Need to Ship </h2>
 <% @merchant.items_ready_to_ship.each do |item| %>
   <p> <%= "#{item.name}" %> </p>
 <% end %>
