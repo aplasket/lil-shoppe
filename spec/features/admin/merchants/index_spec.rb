@@ -62,7 +62,7 @@ RSpec.describe "/admin/merchants, admin::merchants index page" do
         expect(current_path).to eq(admin_merchants_path)
         expect(page).to have_button("Disable")
       end
-
+      save_and_open_page
       expect(page).to have_content("Merchant status updated successfully")
       expect(merchant_1.reload.status).to eq("disabled")
       expect(merchant_2.reload.status).to eq("enabled")
