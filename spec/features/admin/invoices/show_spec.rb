@@ -45,7 +45,7 @@ RSpec.describe "Admin Invoices Show Page", type: :feature do
 
     it "displays all the Items on that invoice and all the items information" do
       visit admin_invoice_path(@invoice_1)
-      
+
       within("#item_#{@item_1.id}") do
         expect(page).to have_content("Item name: #{@item_1.name}")
         expect(page).to have_content("Quantity Ordered: #{@invoice_item_1.quantity}")
@@ -59,7 +59,6 @@ RSpec.describe "Admin Invoices Show Page", type: :feature do
         expect(page).to have_content("Item Sold Price: $#{@invoice_item_2.unit_price/ 100.to_f}")
         expect(page).to have_content("Invoice Item Status: #{@invoice_item_2.status}")
       end
-
     end
   end
 end
