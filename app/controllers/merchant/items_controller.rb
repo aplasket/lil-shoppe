@@ -24,8 +24,8 @@ class Merchant::ItemsController < ApplicationController
       redirect_to merchant_items_path(merchant_id: item.merchant_id)
     else
       item.update(item_params)
+      flash[:success] = "Item #{item.name} Successfully Updated!"
       redirect_to merchant_item_path(merchant_id: item.merchant_id, id: item.id)
-      flash[:notice] = "Item #{item.name} Successfully Updated!"
     end
   end
 

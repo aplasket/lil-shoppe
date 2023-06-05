@@ -8,8 +8,7 @@ RSpec.describe "Merchant_items#show" do
   let!(:item_3) { merchant_2.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500) }
 
   it "links to the merchant's item's show page" do
-    visit "/merchants/#{merchant_1.id}/items/#{item_1.id}"
-
+    visit "/merchants/#{merchant_1.id}/items"
     click_link "hand soap"
 
     expect(page).to have_content("Merchant Item Details")
@@ -33,7 +32,7 @@ RSpec.describe "Merchant_items#show" do
     fill_in "Description", with: "lemongrass"
     click_button "Update Item"
 
-    expect(page).to have_content("Item information has been successfully updated")
+    expect(page).to have_content("Item #{item_1.name} Successfully Updated!")
     expect(page).to have_content("Item Name: #{item_1.name}")
     expect(page).to have_content("Item Description: lemongrass")
     expect(page).to have_content("Current Selling Price: $#{item_1.unit_price / 100.to_f}")
