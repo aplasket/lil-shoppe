@@ -1,5 +1,17 @@
-<h1>All Items</h1>
+<h3><p><%= @merchant.name %> Items</p></h3>
 
-<% @merchant.items.each do |item| %>
-  <h4><%= link_to item.name, merchant_item_path(@merchant, item) %></h4>
+<div class="enabled-items">
+<h4>Enabled Items</h4>
+<% @merchant.items.sort_enabled.each do |item| %>
+  <p><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %></p>
+  <p><%= button_to "Disable #{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}?status=0", method: :patch %></p>
 <% end %>
+</div>
+
+<div class="disabled-items">
+<h4>Disabled Items</h4>
+<% @merchant.items.sort_disabled.each do |item| %>
+  <p><%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %></p>
+  <p><%= button_to "Enable #{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}?status=1", method: :patch %></p>
+<% end %>
+</div>

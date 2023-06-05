@@ -16,5 +16,16 @@ class Item < ApplicationRecord
   def invoice_item_status(invoice)
     invoice_items.where(invoice_id: invoice.id).pluck(:status)
   end
+  validates_presence_of :name, :description, :unit_price
+
+  enum status: ["disabled", "enabled"]
+
+  def self.sort_enabled
+    where(status: "enabled")
+  end
+
+  def self.sort_disabled
+    where(status: "disabled")
+  end
 end
 
