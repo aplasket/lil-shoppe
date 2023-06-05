@@ -1,6 +1,6 @@
 <h3><p><%= @merchant.name %> Items</p></h3>
 
-<p><%= link_to "Create New Item", "/merchants/#{@merchant.id}/items/new", method: :get %></p>
+<p><%= link_to "Create New Item", new_merchant_item_path(@merchant), method: :get %></p>
 
 <div class="enabled-items">
 <h4>Enabled Items</h4>
