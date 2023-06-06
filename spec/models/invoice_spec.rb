@@ -10,6 +10,13 @@ RSpec.describe Invoice, type: :model do
   end
   describe "class methods" do
     describe "#find_and_sort_incomplete_invoices" do
+
+      it "returns all invoices with unshipped items, ordered by creation, oldest to newest" do
+        expected_join = "INNER JOIN invoice_items ON invoice_items.invoice_id = invoices.id"
+        
+        expect(expected_join).to include(expected_join)
+      end
+
       it "returns all invoices with unshipped items, ordered by creation, oldest to newest" do
         merchant = create(:merchant)
         customer = create(:customer)

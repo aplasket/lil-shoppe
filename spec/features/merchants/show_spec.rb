@@ -116,13 +116,6 @@ RSpec.describe Merchant, type: :feature do
       @transaction_2 = Transaction.create!(invoice_id: @invoice_2.id, result: "success")
       @transaction_3 = Transaction.create!(invoice_id: @invoice_3.id, result: "success")
     end
-    # As a merchant
-    # When I visit my merchant dashboard (/merchants/:merchant_id/dashboard)
-    # Then I see a section for "Items Ready to Ship"
-    # In that section I see a list of the names of all of my items that
-    # have been ordered and have not yet been shipped,
-    # And next to each Item I see the id of the invoice that ordered my item
-    # And each invoice id is a link to my merchant's invoice show page
 
     it 'display a section with "Items that Need to Ship" with a list of all those items' do
       visit "/merchants/#{@merchant_1.id}/dashboard"
