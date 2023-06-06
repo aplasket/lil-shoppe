@@ -87,5 +87,15 @@ RSpec.describe "/admin/merchants, admin::merchants index page" do
         end
       end
     end
+
+    it "shows a link to create a new merchant - US29" do
+      visit admin_merchants_path
+
+      expect(page).to have_link("Create New Merchant")
+
+      click_link("Create New Merchant")
+
+      expect(current_path).to eq(new_admin_merchant_path)
+    end
   end
 end
