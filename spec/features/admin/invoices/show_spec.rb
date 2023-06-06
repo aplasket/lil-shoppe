@@ -10,10 +10,10 @@ RSpec.describe "Admin Invoices Show Page", type: :feature do
     @item_1 = create(:item, merchant: @merchant_1)
     @item_2 = create(:item, merchant: @merchant_1)
     @item_3 = create(:item, merchant: @merchant_1)
-    @invoice_item_1 = create(:invoice_item, invoice: @invoice_1, item: @item_1)
-    @invoice_item_2 = create(:invoice_item, invoice: @invoice_1, item: @item_2)
-    @invoice_item_3 = create(:invoice_item, invoice: @invoice_2, item: @item_1)
-    @invoice_item_4 = create(:invoice_item, invoice: @invoice_2, item: @item_3)
+    @invoice_item_1 = create(:invoice_item, invoice: @invoice_1, item: @item_1, quantity: 50, unit_price: 50)
+    @invoice_item_2 = create(:invoice_item, invoice: @invoice_1, item: @item_2, quantity: 100, unit_price: 100)
+    @invoice_item_3 = create(:invoice_item, invoice: @invoice_2, item: @item_1, quantity: 150, unit_price: 150)
+    @invoice_item_4 = create(:invoice_item, invoice: @invoice_2, item: @item_3, quantity: 200, unit_price: 200)
   end
 
   describe "As an Admin, when I visit an admin invoice show page" do
@@ -59,6 +59,18 @@ RSpec.describe "Admin Invoices Show Page", type: :feature do
         expect(page).to have_content("Item Sold Price: $#{@invoice_item_2.unit_price/ 100.to_f}")
         expect(page).to have_content("Invoice Item Status: #{@invoice_item_2.status}")
       end
+    end
+
+    it "displays the total revenue that will be generated from this invoice" do
+      visit admin_invoice_path(@invoice_1)
+      
+      expect(page).to have_content("Total Revenue: $125.00")
+      expect(page).to_not have_content("Total Revenue: $625.00")
+
+      visit admin_invoice_path(@invoice_2)
+
+      expect(page).to have_content("Total Revenue: $625.00")
+      expect(page).to_not have_content("Total Revenue: $125.00")
     end
   end
 end
