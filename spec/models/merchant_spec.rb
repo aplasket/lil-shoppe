@@ -15,7 +15,7 @@ RSpec.describe Merchant, type: :model do
         
     items_ready_to_ship = Item.joins(:invoices).where("invoices.status = ?", 0).select("items.*")
     
-    expect(items_ready_to_ship).to include(item1)
-    expect(items_ready_to_ship).not_to include(item2)
+    expect(merchant.items_ready_to_ship).to include(item1)
+    expect(merchant.items_ready_to_ship).not_to include(item2)
   end
 end
