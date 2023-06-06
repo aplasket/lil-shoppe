@@ -18,7 +18,7 @@ class Item < ApplicationRecord
   end
   validates_presence_of :name, :description, :unit_price
 
-  enum status: ["disabled", "enabled"]
+  enum status: ["enabled", "disabled"]
 
   def self.sort_enabled
     where(status: "enabled")

@@ -5,7 +5,10 @@ RSpec.describe "Merchant_items#index", type: :feature do
   let!(:merchant_2) { Merchant.create!(name: "Charlie's Chia Pets") }
   let!(:item_1) { merchant_1.items.create!(name: "hand soap", description: "lavender", unit_price: 800, status: "enabled") }
   let!(:item_2) { merchant_1.items.create!(name: "sugar scrub", description: "lemongrass", unit_price: 1000, status: "enabled") }
-  let!(:item_3) { merchant_2.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500, status: "disabled") }
+  let!(:item_3) { merchant_1.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500, status: "disabled") }
+  let!(:item_4) { merchant_1.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500, status: "disabled") }
+  let!(:item_5) { merchant_1.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500, status: "disabled") }
+  let!(:item_6) { merchant_1.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500, status: "disabled") }
 
   it "shows all of the names of all of the merchant's items" do
     visit merchant_items_path(merchant_id: merchant_1.id)
@@ -61,5 +64,9 @@ RSpec.describe "Merchant_items#index", type: :feature do
     # - Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
     # - Revenue for an invoice item should be calculated as the invoice item unit price multiplied by the quantity (do not use the item unit price)
 
+    it "shows top 5 most popular items" do
+      visit merchant_items_path(merchant_id: merchant_1.id)
+
+    end
 
 end
