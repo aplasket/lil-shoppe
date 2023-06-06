@@ -1,16 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Merchant_items#new", type: :feature do
-  # US 11
-  # As a merchant
-  # When I visit my items index page
-  # I see a link to create a new item.
-  # When I click on the link,
-  # I am taken to a form that allows me to add item information.
-  # When I fill out the form I click ‘Submit’
-  # Then I am taken back to the items index page
-  # And I see the item I just created displayed in the list of items.
-  # And I see my item was created with a default status of disabled.
   describe "as a visitor" do
     describe "when I am taken to a new item form" do
       let!(:merchant_1) { create(:merchant) }
