@@ -137,10 +137,13 @@ RSpec.describe Merchant, type: :feature do
 
     it 'display id of the invoice that ordered the item as a link to that merchant show page' do
       visit "/merchants/#{@merchant_1.id}/dashboard"
-
+      
       within("#ItemsReadyShip") do
+      
+        expect(page).to have_link(@invoice_1.id)
+        expect(page).to have_link(@invoice_2.id)
+        expect(page).to_not have_link(@invoice_3.id)
       end
-
     end
   end
 end

@@ -12,7 +12,11 @@
 </div>
 <div id="ItemsReadyShip">
 <h2> Items that Need to Ship </h2>
-<% @merchant.items_ready_to_ship.each do |item| %>
+
+<% @merchant.items_ready_to_ship.each do |item| %> 
   <p> <%= "#{item.name}" %> </p>
+  <% item.invoices.each do |invoice| %>
+    <p> <%= link_to "ID: #{invoice.id}", merchant_invoice_path(@merchant, invoice) %> </p>
+  <% end %>
 <% end %>
 </div>
