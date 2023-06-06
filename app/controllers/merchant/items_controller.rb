@@ -1,27 +1,37 @@
 class Merchant::ItemsController < ApplicationController
   def index
     @merchant = Merchant.find(params[:merchant_id])
+    @items = @merchant.items
   end
 
   def show
-    @merchant = Merchant.find(params[:merchant_id])
+    @item = Item.find(params[:id])
+    @merchant = Merchant.find(@item.merchant_id)
   end
 
   def edit
-    @merchant = Merchant.find(params[:merchant_id])
+    @item = Item.find(params[:id])
+    @merchant = Merchant.find(@item.merchant_id)
   end
 
   def update
-    merchant = Merchant.find(params[:merchant_id])
-    return unless merchant.items.find(params[:item_id]).update(item_params)
-
-    redirect_to merchant_item_path(merchant, merchant.items.find(params[:item_id]))
-    flash[:success] = "** Item information has been successfully updated **"
+    item = Item.find(params[:id])
+    if params[:status] == "0"
+      item.update(status: 0)
+      redirect_to merchant_items_path(merchant_id: item.merchant_id)
+    elsif params[:status] == "1"
+      item.update(status: 1)
+      redirect_to merchant_items_path(merchant_id: item.merchant_id)
+    else
+      item.update(item_params)
+      flash[:success] = "Item #{item.name} Successfully Updated!"
+      redirect_to merchant_item_path(merchant_id: item.merchant_id, id: item.id)
+    end
   end
 
   private
 
   def item_params
-    params.require(:item).permit(:id, :name, :description, :unit_price, :merchant_id)
+    params.require(:item).permit(:name, :description, :unit_price, :status)
   end
 end
