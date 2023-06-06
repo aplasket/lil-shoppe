@@ -48,8 +48,20 @@ RSpec.describe Customer, type: :model do
         end
       end
 
-      it "returns the 5 customers with the largest number of successful transactions" do
-        expect(Customer.top_5_by_transaction).to eq([customer_1, customer_2, customer_3, customer_4, customer_5])
+        it "returns the 5 customers with the largest number of successful transactions" do
+          expect(Customer.top_5_by_transaction).to eq([customer_1, customer_2, customer_3, customer_4, customer_5])
+        end
+        
+        it "returns the 5 customers with the largest number of successful transactions" do
+          expected_join = "select("customers.*, count(transactions.id) as result_count")
+          .joins(:transactions)
+          .where("transactions.result = true")
+          .group(:id)
+          .order(result_count: :desc)
+          .limit(5)"
+          expect(expected_join).to include(expected_join)
+        end
+      
       end
     end
   end
