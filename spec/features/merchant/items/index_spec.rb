@@ -4,7 +4,7 @@ RSpec.describe "Merchant_items#index", type: :feature do
 let!(:merchant_1) { Merchant.create!(name: "Steve's Soaps") }
 let!(:merchant_2) { Merchant.create!(name: "Charlie's Chia Pets") }
 let!(:item_1) { merchant_1.items.create!(name: "hand soap", description: "lavender", unit_price: 800, status: "enabled") }
-let!(:item_2) { merchant_1.items.create!(name: "sugar scrub", description: "lemongrass", unit_price: 1000, status: "enabled") }
+let!(:item_2) { merchant_1.items.create!(name: "sugar scrub", description: "lemongrass", unit_price: 10, status: "enabled") }
 let!(:item_3) { merchant_2.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500, status: "disabled") }
 let!(:item_4) { merchant_1.items.create!(name: "slipper socks", description: "accessories", unit_price: 999, status: "enabled") }
 let!(:item_5) { merchant_1.items.create!(name: "coffee mug", description: "World's Best Dad", unit_price: 500, status: "enabled") }
@@ -21,14 +21,15 @@ let!(:invoice2) { Invoice.create!(customer_id: customer1.id, status: 1) }
 let!(:invoice3) { Invoice.create!(customer_id: customer1.id, status: 1) }
 let!(:invoice4) { Invoice.create!(customer_id: customer2.id, status: 1) }
 
-let!(:invoiceitem1) { InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice1.id, quantity: 100, unit_price: 10, status: 1) }
-let!(:invoiceitem2) { InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice2.id, quantity: 100, unit_price: 11, status: 1) }
-let!(:invoiceitem3) { InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice3.id, quantity: 100, unit_price: 12, status: 1) }
-let!(:invoiceitem4) { InvoiceItem.create!(item_id: item_4.id, invoice_id: invoice4.id, quantity: 10, unit_price: 12, status: 1) }
-let!(:invoiceitem5) { InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice1.id, quantity: 100, unit_price: 11, status: 1) }
-voiceilet!(:intem6) { InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice1.id, quantity: 100, unit_price: 12, status: 1) }
-let!(:invoiceitem7) { InvoiceItem.create!(item_id: item_5.id, invoice_id: invoice1.id, quantity: 100, unit_price: 15, status: 1) }
-let!(:invoiceitem8) { InvoiceItem.create!(item_id: item_6.id, invoice_id: invoice1.id, quantity: 100, unit_price: 1, status: 1) }
+let!(:invoiceitem1) { InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice1.id, quantity: 100, unit_price: 800, status: 1) }
+let!(:invoiceitem2) { InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice1.id, quantity: 100, unit_price: 10, status: 1) }
+let!(:invoiceitem3) { InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice2.id, quantity: 100, unit_price: 1500, status: 1) }
+let!(:invoiceitem4) { InvoiceItem.create!(item_id: item_4.id, invoice_id: invoice4.id, quantity: 10, unit_price: 999, status: 1) }
+let!(:invoiceitem5) { InvoiceItem.create!(item_id: item_5.id, invoice_id: invoice1.id, quantity: 100, unit_price: 500, status: 1) }
+let!(:invoiceitem6) { InvoiceItem.create!(item_id: item_6.id, invoice_id: invoice2.id, quantity: 100, unit_price: 1200, status: 1) }
+let!(:invoiceitem7) { InvoiceItem.create!(item_id: item_7.id, invoice_id: invoice1.id, quantity: 100, unit_price: 760, status: 1) }
+let!(:invoiceitem8) { InvoiceItem.create!(item_id: item_8.id, invoice_id: invoice1.id, quantity: 100, unit_price: 100000, status: 1) }
+let!(:invoiceitem9) { InvoiceItem.create!(item_id: item_9.id, invoice_id: invoice2.id, quantity: 100, unit_price: 20000, status: 1) }
 
 let!(:transaction1) { Transaction.create!(invoice_id: invoice1.id, cc_num: 456789456541 cc_exp: 82546789, result: 1) }
 
@@ -87,10 +88,30 @@ let!(:transaction1) { Transaction.create!(invoice_id: invoice1.id, cc_num: 45678
 
     it "shows the most popular items" do
       within "#top-five" do
+        visit merchant_items_path(merchant_id: merchant_1.id)
+
         expect(page).to have_content("Top 5 Items")
+        expect(@item_8.name).to appear_before(@item_1.name)
+        expect(@item_1.name).to appear_before(@item_7.name)
+        expect(@item_7.name).to appear_before(@item_5.name)
+        expect(@item_5.name).to appear_before(@item_4.name)
 
-        expect(page).to have_button()
+        expect(page).to have_no_content(@item_2.name)
 
+        expect(page).to have_link "#{@item_8.name}"
+        expect(page).to have_link "#{@item_1.name}"
+        expect(page).to have_link "#{@item_7.name}"
+        expect(page).to have_link "#{@item_5.name}"
+        expect(page).to have_link "#{@item_4.name}"
+
+        expect(@item_8.item_revenue).to eq(10000000)
+        expect(@item_1.item_revenue).to eq(80000)
+        expect(@item_7.item_revenue).to eq(76000)
+        expect(@item_5.item_revenue).to eq(50000)
+        expect(@item_4.item_revenue).to eq(9990)
+
+        click_link "#{@item_8.name}"
+        expect(current_path).to eq("/merchants/#{@merchant1.id}/items/#{@item_8.id}")
       end
     end
 
