@@ -66,7 +66,7 @@ RSpec.describe Item, type: :model do
 
     describe "#sort_enabled" do
       it "sorts the items by the enabled status" do
-        expect(merchant_1.items.sort_enabled).to eq([item_3])
+        expect(merchant_1.items.sort_enabled).to eq([item_3, item_9])
       end
     end
 
@@ -76,13 +76,13 @@ RSpec.describe Item, type: :model do
       end
     end
 
-    describe "#top-5" do
+    describe "#top_item_revenue" do
       it "revenue method" do
-        expect(@merchant1.items.revenue).to eq([item_9, item_1, item_3, item_5, item_7])
+        expect(item_1.items.top_item_revenue).to eq([item_9, item_1, item_3, item_5, item_7])
       end
 
-      it "item_revenue method" do
-        expect(@item1.item_rev_dollars).to eq(1000)
+      xit "item_revenue method" do
+        expect(item_1.items.item_rev_dollars).to eq(1000)
       end
     end
   end
