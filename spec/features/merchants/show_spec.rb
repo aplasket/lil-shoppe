@@ -17,8 +17,8 @@ RSpec.describe Merchant, type: :feature do
 
       click_link "Items"
 
-      expect(current_path).to eq(merchant_dashboard_path(merchant_1))
-      expect(current_path).to_not eq(merchant_dashboard_path(merchant_2))
+      expect(current_path).to eq(merchant_items_path(merchant_1))
+      expect(current_path).to_not eq(merchant_items_path(merchant_2))
     end
 
     it "displays link to merchant invoices index" do
@@ -26,8 +26,8 @@ RSpec.describe Merchant, type: :feature do
 
       click_link "Invoices"
 
-      expect(current_path).to eq(merchant_dashboard_path(merchant_1))
-      expect(current_path).to_not eq(merchant_dashboard_path(merchant_2))
+      expect(current_path).to eq(merchant_invoices_path(merchant_1))
+      expect(current_path).to_not eq(merchant_invoices_path(merchant_2))
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe Merchant, type: :feature do
     let!(:customer_4) { create(:customer) } # 2 successful transactions
     let!(:customer_5) { create(:customer) } # 1 successful transactions
     let!(:customer_6) { create(:customer) } # 0 successful transactions
-    
+
     before(:each) do
       5.times do
         invoice = create(:invoice, customer: customer_1)
@@ -71,9 +71,9 @@ RSpec.describe Merchant, type: :feature do
         create(:transaction, result: false, invoice: invoice)
       end
     end
-    
+
     it "display names of top 5 customers with largest successful transactions " do
-    
+
       visit merchant_dashboard_path(merchant_1)
 
       within("#top5") do
@@ -130,9 +130,9 @@ RSpec.describe Merchant, type: :feature do
 
     it 'display id of the invoice that ordered the item as a link to that merchant show page' do
       visit "/merchants/#{@merchant_1.id}/dashboard"
-      
+
       within("#ItemsReadyShip") do
-      
+
         expect(page).to have_link(@invoice_1.id)
         expect(page).to have_link(@invoice_2.id)
         expect(page).to_not have_link(@invoice_3.id)
