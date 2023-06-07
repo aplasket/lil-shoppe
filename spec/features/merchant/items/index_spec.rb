@@ -114,9 +114,4 @@ let!(:transaction1) { Transaction.create!(invoice_id: invoice1.id, cc_num: 45678
         expect(current_path).to eq("/merchants/#{@merchant1.id}/items/#{@item_8.id}")
       end
     end
-
-
-
-
-
   end
