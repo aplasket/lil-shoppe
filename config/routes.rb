@@ -1,23 +1,18 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root "application#welcome"
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :merchants, only: [] do
+    resources :invoices, only: [:index], controller: "merchant/invoices"
+    resources :items, only: [:index, :show, :edit, :update, :new, :create], controller: "merchant/items"
+    resource :dashboard, only: [:show], controller: "merchants"
+  end
 
-  get "/", to: "application#welcome"
+  resources :admin, only: [:index]
 
-  get "/merchants/:merchant_id/dashboard", to: "merchants#show"
-  get "/merchants/:merchant_id/invoices", to: "merchant_invoices#index"
-  get "/merchants/:merchant_id/invoices/:invoice_id", to: "merchant_invoices#show"
-  get "/merchants/:merchant_id/items", to: "merchant_items#index"
-  get "/merchants/:merchant_id/items/:item_id", to: "merchant_items#show"
-  get "/merchants/:merchant_id/items/:item_id/edit", to: "merchant_items#edit"
-  patch "/merchants/:merchant_id/items/:item_id/", to: "merchant_items#update"
-
-  get "/admin", to: "admin#index"
+  resources :invoices, only: [:update]
 
   namespace :admin do
-    resources :merchants, except: [:destroy]
-    resources :invoices, except: [:destroy]
+    resources :merchants, only: [:index, :show, :edit, :update, :new, :create]
+    resources :invoices, only: [:index, :show, :update]
   end
 end

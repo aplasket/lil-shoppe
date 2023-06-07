@@ -3,13 +3,13 @@ require "rails_helper"
 RSpec.describe "/admin, index page", type: :feature do
   describe "as an admin, when I visit index page:" do
     it "i see a header indicating it's the dashboard" do
-      visit "/admin"
+      visit admin_index_path
 
       expect(page).to have_content("Admin Dashboard")
     end
 
     it "I see a link to admin merchants index and admin invoices index" do
-      visit "/admin"
+      visit admin_index_path
 
       within ".header" do
         expect(page).to have_link("Admin Merchants Index")
@@ -58,7 +58,7 @@ RSpec.describe "/admin, index page", type: :feature do
     end
 
     it "displays the top 5 customers with their names and number of successful transactions" do
-      visit "/admin"
+      visit admin_index_path
 
       expect(page).to have_content("Top Customers")
 
@@ -86,9 +86,9 @@ RSpec.describe "/admin, index page", type: :feature do
       item_5 = create(:item, merchant: merchant)
       item_6 = create(:item, merchant: merchant)
 
-      @invoice_1 = create(:invoice, customer: customer) # 2 items that have not shipped
-      @invoice_2 = create(:invoice, customer: customer) # 1 item shipped, 1 not shipped
-      @invoice_3 = create(:invoice, customer: customer) # 2 items that have shipped
+      @invoice_1 = create(:invoice, created_at: 3.day.ago, customer: customer) # 2 items that have not shipped
+      @invoice_2 = create(:invoice, created_at: 2.day.ago, customer: customer) # 1 item shipped, 1 not shipped
+      @invoice_3 = create(:invoice, created_at: 2.day.ago, customer: customer) # 2 items that have shipped
 
       @invoice_item_1 = create(:invoice_item, status: "pending", item: item_1, invoice: @invoice_1)
       @invoice_item_2 = create(:invoice_item, status: "packaged", item: item_2, invoice: @invoice_1)
@@ -98,17 +98,17 @@ RSpec.describe "/admin, index page", type: :feature do
       @invoice_item_6 = create(:invoice_item, status: "shipped", item: item_6, invoice: @invoice_3)
     end
 
-    it "has a section for Incomplete Invoices that displays linked ids that have not been shipped" do
-      visit "/admin"
-
+    it "has a section for unshipped Incomplete Invoices with ids as links, ordered by creation, oldest to newest" do
+      visit admin_index_path
       expect(page).to have_content("Incomplete Invoices")
       expect(page).to_not have_content("Invoice ##{@invoice_3.id}")
 
       within("#incomplete-invoices") do
+        expect("Invoice ##{@invoice_1.id}").to appear_before("Invoice ##{@invoice_2.id}")
+        expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %d, %Y"))
         expect(page).to have_link("Invoice ##{@invoice_1.id}")
         expect(page).to have_link("Invoice ##{@invoice_2.id}")
       end
-
     end
   end
 end

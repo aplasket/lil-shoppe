@@ -1,0 +1,21 @@
+<%= link_to "Create New Merchant", new_admin_merchant_path %>
+
+<div id="enabled-merchants">
+  <h2>Enabled Merchants</h2>
+  <% @merchants.all_enabled.each do |merchant| %>
+    <div class="merchant-<%= merchant.id %>">
+      <p><%= link_to merchant.name, admin_merchant_path(merchant) %></p>
+      <%= button_to "Disable", admin_merchant_path(id: "#{merchant.id}", status: "1"), method: :patch %>
+    </div>
+  <% end %>
+</div>
+
+<div id="disabled-merchants">
+  <h2>Disabled Merchants</h2>
+  <% @merchants.all_disabled.each do |merchant| %>
+    <div class="merchant-<%= merchant.id %>">
+      <p><%= link_to merchant.name, admin_merchant_path(merchant) %></p>
+      <%= button_to "Enable", admin_merchant_path(id: "#{merchant.id}", status: "0"), method: :patch %>
+    </div>
+  <% end %>
+</div>

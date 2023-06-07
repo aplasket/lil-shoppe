@@ -1,0 +1,21 @@
+<h2>Invoice ID: <%= @invoice.id %></h2>
+
+ <p>Invoice Status: <%= form_with model: @invoice, local: true do |form| %></p>
+                    <%= form.collection_select :status, ["in progress", "completed", "cancelled"], :to_s, :titleize, selected: @invoice.status %>
+                    <%= form.submit "Update Invoice Status"%>
+                    <% end %>
+
+<p>Invoice Created On: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
+<p>Total Revenue: <%= number_to_currency(@invoice.total_revenue / 100.to_f) %>
+
+<p>Customer Name: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %>
+
+<p>Items: <% @invoice.items.each do |item| %></p>
+  <ul id = "item_<%=item.id%>">
+    <li>Item name: <%= item.name %></li>
+    <li>Quantity Ordered: <%= item.quantity_sold(@invoice).first %></li>
+    <li>Item Sold Price: <%= number_to_currency(item.find_sold_price(@invoice).first / 100.to_f) %></li>
+    <li>Invoice Item Status: <%= item.invoice_item_status(@invoice).first %>
+  </ul>
+<% end %>
+

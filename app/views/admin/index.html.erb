@@ -1,6 +1,6 @@
 <div class="header"><h2>Admin Dashboard</h2>
-  <div><%= link_to "Admin Merchants Index", "/admin/merchants" %></div>
-  <div><%= link_to "Admin Invoices Index", "/admin/invoices" %></div>
+  <div><%= link_to "Admin Merchants Index", admin_merchants_path %></div>
+  <div><%= link_to "Admin Invoices Index", admin_invoices_path %></div>
 </div>
 
 <section id="top-five-customers">
@@ -16,7 +16,9 @@
   <h3>Incomplete Invoices</h3>
   <ul>
     <% @invoices.each do |invoice| %>
-      <li><%= link_to "Invoice ##{invoice.id}", "/admin/invoices" %></li>
+      <li><%= link_to "Invoice ##{invoice.id}", admin_invoice_path(invoice) %> -
+          <%= invoice.created_at.strftime("%A, %B %d, %Y") %>
+      </li>
     <% end %>
   </ul>
 </section>

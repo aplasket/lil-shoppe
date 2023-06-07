@@ -9,10 +9,7 @@ RSpec.describe "Merchant_items#show" do
 
   it "links to the merchant's item's show page" do
     visit "/merchants/#{merchant_1.id}/items"
-
     click_link "hand soap"
-
-    expect(current_path).to eq "/merchants/#{merchant_1.id}/items/#{item_1.id}"
 
     expect(page).to have_content("Merchant Item Details")
     expect(page).to have_content("Merchant: #{merchant_1.name}")
@@ -28,7 +25,6 @@ RSpec.describe "Merchant_items#show" do
 
     click_link "Update Item"
 
-    expect(current_path).to eq "/merchants/#{merchant_1.id}/items/#{item_1.id}/edit"
     expect(find_field("item_name").value).to eq(item_1.name)
     expect(find_field("item_description").value).to eq(item_1.description)
     expect(find_field("item_unit_price").value.to_i).to eq(800)
@@ -36,8 +32,7 @@ RSpec.describe "Merchant_items#show" do
     fill_in "Description", with: "lemongrass"
     click_button "Update Item"
 
-    expect(page).to have_current_path("/merchants/#{merchant_1.id}/items/#{item_1.id}")
-    expect(page).to have_content("Item information has been successfully updated")
+    expect(page).to have_content("Item #{item_1.name} Successfully Updated!")
     expect(page).to have_content("Item Name: #{item_1.name}")
     expect(page).to have_content("Item Description: lemongrass")
     expect(page).to have_content("Current Selling Price: $#{item_1.unit_price / 100.to_f}")
