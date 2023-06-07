@@ -5,15 +5,15 @@ RSpec.describe "Admin Invoices Show Page", type: :feature do
     @merchant_1 = create(:merchant)
     @customer_1 = create(:customer)
     @customer_2 = create(:customer)
-    @invoice_1 = create(:invoice, customer: @customer_1)
-    @invoice_2 = create(:invoice, customer: @customer_2)
+    @invoice_1 = create(:invoice, customer: @customer_1, status: 'in progress')
+    @invoice_2 = create(:invoice, customer: @customer_2, status: 'cancelled')
     @item_1 = create(:item, merchant: @merchant_1)
     @item_2 = create(:item, merchant: @merchant_1)
     @item_3 = create(:item, merchant: @merchant_1)
-    @invoice_item_1 = create(:invoice_item, invoice: @invoice_1, item: @item_1)
-    @invoice_item_2 = create(:invoice_item, invoice: @invoice_1, item: @item_2)
-    @invoice_item_3 = create(:invoice_item, invoice: @invoice_2, item: @item_1)
-    @invoice_item_4 = create(:invoice_item, invoice: @invoice_2, item: @item_3)
+    @invoice_item_1 = create(:invoice_item, invoice: @invoice_1, item: @item_1, quantity: 50, unit_price: 50)
+    @invoice_item_2 = create(:invoice_item, invoice: @invoice_1, item: @item_2, quantity: 100, unit_price: 100)
+    @invoice_item_3 = create(:invoice_item, invoice: @invoice_2, item: @item_1, quantity: 150, unit_price: 150)
+    @invoice_item_4 = create(:invoice_item, invoice: @invoice_2, item: @item_3, quantity: 200, unit_price: 200)
   end
 
   describe "As an Admin, when I visit an admin invoice show page" do
@@ -21,7 +21,7 @@ RSpec.describe "Admin Invoices Show Page", type: :feature do
       visit admin_invoice_path(@invoice_1)
 
       expect(page).to have_content("Invoice ID: #{@invoice_1.id}")
-      expect(page).to have_content("Invoice Status: #{@invoice_1.status}")
+      expect(page).to have_content("Invoice Status:")
       expect(page).to have_content("Invoice Created On: #{@invoice_1.created_at.strftime('%A, %B %d, %Y')}")
       expect(page).to have_content("Customer Name: #{@customer_1.first_name} #{@customer_1.last_name}")
 
@@ -33,7 +33,7 @@ RSpec.describe "Admin Invoices Show Page", type: :feature do
       visit admin_invoice_path(@invoice_2)
 
       expect(page).to have_content("Invoice ID: #{@invoice_2.id}")
-      expect(page).to have_content("Invoice Status: #{@invoice_2.status}")
+      expect(page).to have_content("Invoice Status:")
       expect(page).to have_content("Invoice Created On: #{@invoice_2.created_at.strftime('%A, %B %d, %Y')}")
       expect(page).to have_content("Customer Name: #{@customer_2.first_name} #{@customer_2.last_name}")
 
@@ -59,6 +59,53 @@ RSpec.describe "Admin Invoices Show Page", type: :feature do
         expect(page).to have_content("Item Sold Price: $#{@invoice_item_2.unit_price/ 100.to_f}")
         expect(page).to have_content("Invoice Item Status: #{@invoice_item_2.status}")
       end
+    end
+
+    it "displays the total revenue that will be generated from this invoice" do
+      visit admin_invoice_path(@invoice_1)
+
+      expect(page).to have_content("Total Revenue: $125.00")
+      expect(page).to_not have_content("Total Revenue: $625.00")
+
+      visit admin_invoice_path(@invoice_2)
+
+      expect(page).to have_content("Total Revenue: $625.00")
+      expect(page).to_not have_content("Total Revenue: $125.00")
+    end
+
+    it "displays invoice status as a select field woth current status selected" do
+      visit admin_invoice_path(@invoice_1)
+
+      expect(page).to have_content("Invoice Status:")
+      expect(page).to have_field('invoice_status', with: "#{@invoice_1.status}")
+
+      visit admin_invoice_path(@invoice_2)
+
+      expect(page).to have_content("Invoice Status:")
+      expect(page).to have_field('invoice_status', with: "#{@invoice_2.status}")
+    end
+
+    it "will allow the admin to change field and click 'Update Invoice Status' then redirects back to admin invoice show page" do
+      visit admin_invoice_path(@invoice_1)
+      save_and_open_page
+      expect(@invoice_1.status).to eq("in progress")
+
+      select "Completed", from: 'invoice_status'
+      click_button "Update Invoice Status"
+
+      expect(@invoice_1.reload.status).to eq("completed")
+      expect(current_path).to eq(admin_invoice_path(@invoice_1))
+
+      visit admin_invoice_path(@invoice_2)
+
+      expect(@invoice_2.status).to eq("cancelled")
+
+      select "In Progress", from: 'invoice_status'
+      click_button "Update Invoice Status"
+
+      expect(@invoice_2.reload.status).to eq("in progress")
+      expect(current_path).to eq(admin_invoice_path(@invoice_2))
+
     end
   end
 end
