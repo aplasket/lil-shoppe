@@ -50,7 +50,7 @@ RSpec.describe Customer, type: :model do
 
         it "returns the 5 customers with the largest number of successful transactions" do
           expect(Customer.top_5_by_transaction).to eq([customer_1, customer_2, customer_3, customer_4, customer_5])
-        end      
+        end
     end
   end
 
