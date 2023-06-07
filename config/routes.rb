@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root "application#welcome"
 
   resources :merchants, only: [] do
-    resources :invoices, only: [:index], controller: "merchant/invoices"
+    resources :invoices, only: [:index, :show], controller: "merchant/invoices"
     resources :items, only: [:index, :show, :edit, :update], controller: "merchant/items"
     resource :dashboard, only: [:show], controller: "merchants"
   end
