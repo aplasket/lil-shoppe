@@ -25,6 +25,7 @@ RSpec.describe Item, type: :model do
     let!(:item_6) { create(:item, merchant: merchant_2, status: 'enabled') }
     let!(:item_7) { create(:item, merchant: merchant_1, status: 'disabled') }
     let!(:item_8) { create(:item, merchant: merchant_2, status: 'enabled') }
+    let!(:item_9) { create(:item, merchant: merchant_1, status: 'enabled') }
 
     let!(:invoice_1) { create(:invoice, customer: customer_1) }
     let!(:invoice_2) { create(:invoice, customer: customer_2) }
@@ -37,6 +38,7 @@ RSpec.describe Item, type: :model do
     let!(:invoice_item_6) { create(:invoice_item, invoice: invoice_1, item: item_7, quantity: 1, unit_price: 250) }
     let!(:invoice_item_7) { create(:invoice_item, invoice: invoice_2, item: item_6, quantity: 2, unit_price: 160) }
     let!(:invoice_item_8) { create(:invoice_item, invoice: invoice_2, item: item_8, quantity: 3, unit_price: 140) }
+    let!(:invoice_item_9) { create(:invoice_item, invoice: invoice_1, item: item_9, quantity: 10, unit_price: 500) }
 
     describe "#quantity_sold" do
       it "finds the quantity of the item sold in a particular invoice" do
@@ -73,14 +75,15 @@ RSpec.describe Item, type: :model do
         expect(merchant_1.items.sort_disabled).to eq([item_1, item_5, item_7])
       end
     end
+
+    describe "#top-5" do
+      it "revenue method" do
+        expect(@merchant1.items.revenue).to eq([item_9, item_1, item_3, item_5, item_7])
+      end
+
+      it "item_revenue method" do
+        expect(@item1.item_rev_dollars).to eq(1000)
+      end
+    end
   end
 end
-
-    # describe "#top-5" do
-    #   it "revenue method" do
-    #     expect(@merchant1.items.revenue).to eq([@item5, @item3, @item2, @item1, @item6])
-    #   end
-    #   it "item_revenue method" do
-    #     expect(@item1.item_rev_dollars).to eq(1000)
-    #   end
-    # end
