@@ -87,7 +87,7 @@ RSpec.describe "Admin Invoices Show Page", type: :feature do
 
     it "will allow the admin to change field and click 'Update Invoice Status' then redirects back to admin invoice show page" do
       visit admin_invoice_path(@invoice_1)
-      
+
       expect(@invoice_1.status).to eq("in progress")
 
       select "Completed", from: 'invoice_status'
