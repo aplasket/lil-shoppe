@@ -6,12 +6,12 @@ let!(:merchant_2) { Merchant.create!(name: "Charlie's Chia Pets") }
 let!(:item_1) { merchant_1.items.create!(name: "hand soap", description: "lavender", unit_price: 800, status: "enabled") }
 let!(:item_2) { merchant_1.items.create!(name: "sugar scrub", description: "lemongrass", unit_price: 1000, status: "enabled") }
 let!(:item_3) { merchant_2.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500, status: "disabled") }
-let!(:item_4) { merchant_1.items.create!(name: "hand soap", description: "lavender", unit_price: 800, status: "enabled") }
-let!(:item_5) { merchant_1.items.create!(name: "sugar scrub", description: "lemongrass", unit_price: 1000, status: "enabled") }
-let!(:item_6) { merchant_2.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500, status: "disabled") }
-let!(:item_7) { merchant_1.items.create!(name: "hand soap", description: "lavender", unit_price: 800, status: "enabled") }
-let!(:item_8) { merchant_1.items.create!(name: "sugar scrub", description: "lemongrass", unit_price: 1000, status: "enabled") }
-let!(:item_9) { merchant_2.items.create!(name: "Bob Ross Chia", description: "medium chia pet", unit_price: 1500, status: "disabled") }
+let!(:item_4) { merchant_1.items.create!(name: "slipper socks", description: "accessories", unit_price: 999, status: "enabled") }
+let!(:item_5) { merchant_1.items.create!(name: "coffee mug", description: "World's Best Dad", unit_price: 500, status: "enabled") }
+let!(:item_6) { merchant_2.items.create!(name: "mood ring", description: "boho jewelry", unit_price: 1200, status: "disabled") }
+let!(:item_7) { merchant_1.items.create!(name: "customized dog collar", description: "pet products", unit_price: 760, status: "enabled") }
+let!(:item_8) { merchant_1.items.create!(name: "framed, autographed photo of me", description: "priceless heirloom", unit_price: 100000, status: "enabled") }
+let!(:item_9) { merchant_2.items.create!(name: "bag of air from Taylor Swift concert", description: "swag", unit_price: 20000, status: "disabled") }
 
 let!(:customer1) { Customer.create!(first_name: "Shakira", last_name: "Shanana") }
 let!(:customer2) { Customer.create!(first_name: "Cher", last_name: "Chernobyl") }
@@ -26,7 +26,7 @@ let!(:invoiceitem2) { InvoiceItem.create!(item_id: item_2.id, invoice_id: invoic
 let!(:invoiceitem3) { InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice3.id, quantity: 100, unit_price: 12, status: 1) }
 let!(:invoiceitem4) { InvoiceItem.create!(item_id: item_4.id, invoice_id: invoice4.id, quantity: 10, unit_price: 12, status: 1) }
 let!(:invoiceitem5) { InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice1.id, quantity: 100, unit_price: 11, status: 1) }
-let!(:invoiceitem6) { InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice1.id, quantity: 100, unit_price: 12, status: 1) }
+voiceilet!(:intem6) { InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice1.id, quantity: 100, unit_price: 12, status: 1) }
 let!(:invoiceitem7) { InvoiceItem.create!(item_id: item_5.id, invoice_id: invoice1.id, quantity: 100, unit_price: 15, status: 1) }
 let!(:invoiceitem8) { InvoiceItem.create!(item_id: item_6.id, invoice_id: invoice1.id, quantity: 100, unit_price: 1, status: 1) }
 
@@ -87,6 +87,9 @@ let!(:transaction1) { Transaction.create!(invoice_id: invoice1.id, cc_num: 45678
 
     it "shows the most popular items" do
       within "#top-five" do
+        expect(page).to have_content("Top 5 Items")
+
+        expect(page).to have_button()
 
       end
     end
