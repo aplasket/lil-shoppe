@@ -1,7 +1,4 @@
 class Merchant::ItemsController < ApplicationController
-  before_action :set_merchant
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
-
   def index
     @merchant = Merchant.find(params[:merchant_id])
     @items = @merchant.items
