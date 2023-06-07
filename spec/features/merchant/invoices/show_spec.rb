@@ -6,7 +6,6 @@ RSpec.describe 'Merchant Invoice Show Page', type: :feature do
 
     @item_1 = create(:item, merchant: @merchant_1)
     @item_2 = create(:item, merchant: @merchant_1)
-    @item_3 = create(:item, merchant: @merchant_2)
 
 
     @customer_1 = create(:customer)
