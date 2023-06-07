@@ -1,42 +1,91 @@
-![image](https://github.com/The-J-MAK-5/little-shop-7/assets/124642113/b604734c-a2ba-432d-8920-e1da15737e12)
 # Little Esty Shop
 
-## Background and Description
 
-"Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
+## Getting Started
 
-## Learning Goals
+1. In your terminal, navigate to the directory you would like to host the repository in.
+2. Clone the project repository and navigate to the main project directory:
+
+```
+git clone git@github.com:The-J-MAK-5/little-shop-7.git
+```
+
+3. Run `bundle install` in your terminal to install project gems.
+
+4. Ensure that Postgres is running, and run these commands to initialize the databases and set up database structure:
+
+```
+rails db:drop
+rails db:create
+rails db:migrate
+```
+
+5. Run `rake csv_load:all` in your terminal to load in data from the six CSVs stored locally in the application.
+
+6. Run the `bundle exec rspec` command to see all of the Rspec tests run and ensure the program is running properly.
+
+## Testing
+
+- To run model tests for this app, type the following command in your terminal:
+
+```
+bundle exec rspec spec/models
+```
+
+- To run model tests for this app, type the following command in your terminal:
+
+```
+bundle exec rspec spec/features
+```
+
+This application uses the `Simplecov` gem to monitor test coverage.
+
+## Deployment
+
+This application is deployed with Render [here](https://little-shop-7.onrender.com)
+
+## Project Status and Potential Next Steps
+
+View the project management tracker and any open issues by clicking [here](https://github.com/orgs/The-J-MAK-5/projects/1).
+
+View our group goals and DTR [here](https://www.notion.so/Lil-Esty-Shoppe-28de3aa6ab2345e9bd2b0bd16842c44e).
+
+### Description Of The Project
+
+![image](https://github.com/The-J-MAK-5/little-shop-7/assets/124642113/b604734c-a2ba-432d-8920-e1da15737e12)
+
+This is a fictitious e-commerce platform that allows Merchants and Admins to view and manage their inventory and fulfill customer invoices.
+
+Through this project, our team tried to accomplished the following learning goals:
+
 - Practice designing a normalized database schema and defining model relationships
-- Utilize advanced routing techniques including namespacing to organize and group like functionality together.
+- Utilize advanced routing techniques including namespacing to organize and group like functionality together
 - Utilize advanced active record techniques to perform complex database queries
-- Practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code
 
-## Requirements
-- Must use Rails 7.0.x, Ruby 3.1.1
-- Must use PostgreSQL
-- All code must be tested via feature tests and model tests, respectively
-- Must use GitHub branching, team code reviews via GitHub PR comments, and either GitHub Projects or a project management tool of your group's choice (Trello, Notion, etc.)
-- Must include a thorough README to describe the project
-   - README should include a basic description of the project, a summary of the work completed, and some ideas for a potential contributor to work on/refactor next. Also include the names and GitHub links of all student contributors on your project. 
-- Must deploy completed code to the internet (using Heroku or Render)
-- Continuous Integration / Continuous Deployment is not allowed
-- Use of scaffolding is not allowed
-- Any gems added to the project must be approved by an instructor
-  - Pre-approved gems are `capybara, pry, faker, factory_bot_rails, orderly, simplecov, shoulda-matchers, launchy`
+### Looking Ahead
 
-## Setup
+- Styling to implement a more consistent look and feel throughout the application
+- Finishing All User Stories
+- Authentication and authorization, for either or both of the Merchant and Administrator user types.
 
-* Fork this repository
-* Clone your fork
-* From the command line, install gems and set up your DB:
-    * `bundle`
-    * `rails db:create`
-* Run the test suite with `bundle exec rspec`.
-* Run your development server with `rails s` to see the app in action.
+## Contributors
 
-## Phases
+Ashley Plasket
+[GitHub](https://github.com/aplasket)
+[LinkedIn](https://www.linkedin.com/in/ashley-plasket/)
 
-1. [Database Setup](./doc/db_setup.md)
-1. [User Stories](./doc/user_stories.md)
-1. [Extensions](./doc/extensions.md)
-1. [Evaluation](./doc/evaluation.md)
+Myles Nottingham
+[GitHub](https://github.com/MylesNottingham)
+[LinkedIn](https://www.linkedin.com/in/mylesnottingham/)
+
+Kim Bergstorm
+[GitHub](https://github.com/kbergstrom78)
+[LinkedIn](https://www.linkedin.com/in/kimberley-bergstrom/)
+
+Jeff Nelson
+[GitHub](https://github.com/jpnelson85)
+[LinkedIn](www.linkedin.com/in/jeff-nelson-307ab)
+
+Alex Kiselich
+[GitHub](https://github.com/AlexKiselich)
+[LinkedIn](linkedin.com/in/alexanderkiselich)
