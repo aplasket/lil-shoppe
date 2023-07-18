@@ -48,8 +48,6 @@ This application is deployed with Render [here](https://little-shop-7.onrender.c
 
 View the project management tracker and any open issues by clicking [here](https://github.com/orgs/The-J-MAK-5/projects/1).
 
-View our group goals and DTR [here](https://www.notion.so/Lil-Esty-Shoppe-28de3aa6ab2345e9bd2b0bd16842c44e).
-
 ### Description Of The Project
 
 ![image](https://github.com/The-J-MAK-5/little-shop-7/assets/124642113/b604734c-a2ba-432d-8920-e1da15737e12)
